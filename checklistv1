@@ -11,8 +11,11 @@ b. Perform Network Mapping
 		example: HTTP services, LDAP Services
 		HTTP - Web Server
 		LDAP - Active Directory Server
+
+	ii.) Aggressive NMAP Scan:
+		nmap -T4 -A -v $IP_Address
 		
-	ii.) Scan for all Open Ports using MassScan
+	iii.) Scan for all Open Ports using MassScan
 		 sudo massscan -p1-65535,U:1-65535 $IP_Address --rate 2500000
 
 =====================================================================
