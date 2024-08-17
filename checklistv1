@@ -34,8 +34,10 @@ b. Find more information about the WebServices / Servers
 			
 		2.) nikto
 			nikto -host=http://$IP_Address
-		
-		Both should reveal if Wordpress services or any files are present
+
+		3.) gobuster -use standard wordlists.
+			gobuster dir -u URL -w -
+		They should reveal if Wordpress services or any files are present
 		
 	ii.) Run Dirb on them to find directories on webservers
 			dirb http://$IP_Address
