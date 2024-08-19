@@ -480,6 +480,7 @@ a. Network Exploitation
 			1" OR "1"="1
 			A' OR 'A'='A
 			1'='1' OR '2='2
+			admin'-- -
 		
 		To see if you can get the list of all tables in the database:
 		    • Shows 2 columns: 
