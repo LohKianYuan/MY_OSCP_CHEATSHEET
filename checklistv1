@@ -18,6 +18,9 @@ b. Perform Network Mapping
 	iii.) Scan for all Open Ports using MassScan
 		 sudo massscan -p1-65535,U:1-65535 $IP_Address --rate 2500000
 
+	iv.) scan for OS version in depth:
+		sudo nmap -sCV -Pn -vv $IP_Address
+
 =====================================================================
 2. Vulnerability Analysis:
 a. Access each HTTP service manually by going to the browser and typing each IP in the URL.
