@@ -164,7 +164,10 @@ a. Network Exploitation
 		
 		Enumerating SMB Shares
 		To enumerate SMB shares on a target or range of targets:
-		crackmapexec smb 192.168.1.0/24 --shares
+		1.) crackmapexec smb 192.168.1.0/24 --shares
+		2.) smbmap -H 10.129.228.253
+		3.) smbclient -L 10.129.228.253
+
 
 		Enumerating Users
 		crackmapexec smb 192.168.1.0/24 -u 'username' -p 'password' --users
