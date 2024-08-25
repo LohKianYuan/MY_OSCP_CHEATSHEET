@@ -571,3 +571,11 @@ a. Running .exe files on Linux
 - use Wine
 eg command: wine UserInfo.exe -v find -first "administrator"
 
+b.) IIS / ASPX exploit
+for IIS, you can upload a .aspx reverse shell like reverse.aspx to their ftp server
+Then go to the HTTP://$IP.address/reverse.aspx to get it to run the reverse shell
+Open MSFConsole / Netcat to get the shell access.
+
+c.) MSFConsole
+use local_exploit suggester after you get a shell access to find what other exploits can you do to get root access.
+
