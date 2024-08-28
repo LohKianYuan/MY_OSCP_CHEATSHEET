@@ -326,6 +326,7 @@ a. Network Exploitation
 
 			You can also dump credentials if you have Administrator meterpreter:
 			command: hashdump
+			to get SID, you can run whoami /user on a normal shell
 			
 			3.) Make sure to operate in the correct architecture; otherwise you will not be able to extract data properly.
 			command: bg
