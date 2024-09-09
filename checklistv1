@@ -168,6 +168,8 @@ a. Network Exploitation
 		2.) smbmap -H 10.129.228.253
 		3.) smbclient -L 10.129.228.253
 		4.) smbclient \\\\IPADDRESS\\Foldername
+		5.) with credentials:
+		smbclient //IPADDRESS/Uploads -U administrator
 
 
 		Enumerating Users
