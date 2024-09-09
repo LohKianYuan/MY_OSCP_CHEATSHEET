@@ -183,6 +183,10 @@ a. Network Exploitation
 		g.) Connecting to Shares manually
 		Linux: Go to a folder in kali, type smb://IP_Address
 		Windows: go to run, type \\IP_Address
+
+		h.) run commands with credentials:
+		impacket-smbexec administrator:Password123@192.168.64.142
+		ssh -p 2222 user@192.168.1.100 'ls'
 		
 	ii.) Domain Exploitation (After getting access & having credentials)
 		a.) Leveraging PowerShell for Exploitation
