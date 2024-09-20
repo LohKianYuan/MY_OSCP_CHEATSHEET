@@ -20,7 +20,7 @@ b. Perform Network Mapping
 	iii.) Aggresive NMAP service version 
 		sudo nmap -sCV -T4 -A -Pn -vv $IP_Address
 
-	iv.) scan for service version in depth:
+	iv.) scan for service, OS version in depth:
 		sudo nmap -sCV -Pn -vv $IP_Address
 
 	v.) Scan for all Open Ports using MassScan
