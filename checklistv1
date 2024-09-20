@@ -14,14 +14,19 @@ b. Perform Network Mapping
 		HTTP - Web Server
 		LDAP - Active Directory Server
 
-	ii.) Aggressive NMAP Scan:
+	ii.) Aggressive NMAP Scan fast:
 		nmap -T4 -A -v $IP_Address
-		
-	iii.) Scan for all Open Ports using MassScan
+
+	iii.) Aggresive NMAP service version 
+		sudo nmap -sCV -T4 -A -Pn -vv $IP_Address
+
+	iv.) scan for service version in depth:
+		sudo nmap -sCV -Pn -vv $IP_Address
+
+	v.) Scan for all Open Ports using MassScan
 		 sudo massscan -p1-65535,U:1-65535 $IP_Address --rate 2500000
 
-	iv.) scan for OS version in depth:
-		sudo nmap -sCV -Pn -vv $IP_Address
+	
 
 =====================================================================
 		2. Vulnerability Analysis:
