@@ -461,7 +461,7 @@ a. Network Exploitation
 
 	2. WebServer Exploitation - Bruteforce
 		i.) Run wordpress scanner to scan if website has wordpress
-			wpscan --url $IP_Address -e
+			wpscan --url $IP_Address
 	
 		ii.) Bruteforce Wordpress using MSFConsole
 			msfconsole: search wordpress enum
