@@ -645,9 +645,12 @@ ssh -o PubkeyAcceptedKeyTypes=ssh-rsa -i hype_key_decrypted hype@$IP
 ii.) RSA Key - always set permission in order to use it.
 chmod 400 RSA_KEY_NAME
 
-f.) when encounter CMS, use whatweb to scan the URL if it is wordpress or what other vulnerability
+h.) 
+i.) when encounter CMS, use whatweb to scan the URL if it is wordpress or what other vulnerability
 whatweb url
 
+ii) Wordpress hashes: $P$BINTaLa8QLMqeXbQtzT2Qfizm2P/nI0
+https://hashcat.net/wiki/doku.php?id=example_hashes
 =====================================================================
 		6.) Priv Escalation
 =====================================================================
