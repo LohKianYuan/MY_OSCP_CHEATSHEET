@@ -651,6 +651,10 @@ whatweb url
 
 ii) Wordpress hashes: $P$BINTaLa8QLMqeXbQtzT2Qfizm2P/nI0
 https://hashcat.net/wiki/doku.php?id=example_hashes
+
+iii) Bruteforce wordpress hash
+admin:$P$BINTaLa8QLMqeXbQtzT2Qfizm2P/nI0 > hash.txt
+john hash.txt --wordlist=rockyou.txt
 =====================================================================
 		6.) Priv Escalation
 =====================================================================
