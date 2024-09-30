@@ -665,8 +665,12 @@ iii) Bruteforce wordpress hash
 admin:$P$BINTaLa8QLMqeXbQtzT2Qfizm2P/nI0 > hash.txt
 john hash.txt --wordlist=rockyou.txt
 
-I.) to know if a website is PHP or ASP
+I.) to know if a website is PHP or ASP/ASPX
 curl -I URL. 
+If the header indicates ASP/ASPX, type the url like: 
+http://example.com/index.asp
+http://example.com/index.aspx
+The one that works is the aspx website
 =====================================================================
 		6.) Priv Escalation
 =====================================================================
