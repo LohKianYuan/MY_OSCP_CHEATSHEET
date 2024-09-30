@@ -671,6 +671,9 @@ If the header indicates ASP/ASPX, type the url like:
 http://example.com/index.asp
 http://example.com/index.aspx
 The one that works is the aspx website
+a good ASPX Shell: https://github.com/borjmz/aspx-reverse-shell/blob/master/shell.aspx
+You must listen using netcat
+
 =====================================================================
 		6.) Priv Escalation
 =====================================================================
