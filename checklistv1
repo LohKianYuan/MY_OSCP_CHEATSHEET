@@ -664,6 +664,9 @@ https://hashcat.net/wiki/doku.php?id=example_hashes
 iii) Bruteforce wordpress hash
 admin:$P$BINTaLa8QLMqeXbQtzT2Qfizm2P/nI0 > hash.txt
 john hash.txt --wordlist=rockyou.txt
+
+I.) to know if a website is PHP or ASP
+curl -I URL. 
 =====================================================================
 		6.) Priv Escalation
 =====================================================================
