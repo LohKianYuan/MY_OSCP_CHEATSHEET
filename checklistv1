@@ -674,6 +674,11 @@ The one that works is the aspx website
 a good ASPX Shell: https://github.com/borjmz/aspx-reverse-shell/blob/master/shell.aspx
 You must listen using netcat
 
+J.) use exiftool to display details about the document.pdf
+-a --> duplicate tags
+-u --> unknown tags
+exiftool -a -u document.pdf
+
 =====================================================================
 		6.) Priv Escalation
 =====================================================================
