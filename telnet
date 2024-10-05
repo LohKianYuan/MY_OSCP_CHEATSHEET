@@ -1,0 +1,45 @@
+telnet 192.168.223.199 25
+
+EHLO 192.168.223.199
+AUTH LOGIN
+
+dGVzdEBzdXBlcm1hZ2ljb3JnLmNvbQ==
+dGVzdA==
+
+MAIL FROM: test@supermagicorg.com
+
+RCPT TO: dave.wizard@supermagicorg.com
+
+DATA
+
+
+Subject: Sending a CONFIG file as an attachment
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="boundary-example"
+
+--boundary-example
+Content-Type: text/plain
+
+This is the body of the email.
+
+--boundary-example
+Content-Type: application/octet-stream; name="config.Library-ms"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="config.Library-ms"
+
+PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPGxpYnJhcnlEZXNjcmlwdGlv
+biB4bWxucz0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93aW5kb3dzLzIwMDkvbGlicmFy
+eSI+CjxuYW1lPkB3aW5kb3dzLnN0b3JhZ2UuZGxsLC0zNDU4MjwvbmFtZT4KPHZlcnNpb24+Njwv
+dmVyc2lvbj4KPGlzTGlicmFyeVBpbm5lZD50cnVlPC9pc0xpYnJhcnlQaW5uZWQ+CjxpY29uUmVm
+ZXJlbmNlPmltYWdlcmVzLmRsbCwtMTAwMzwvaWNvblJlZmVyZW5jZT4KPHRlbXBsYXRlSW5mbz4K
+PGZvbGRlclR5cGU+ezdkNDlkNzI2LTNjMjEtNGYwNS05OWFhLWZkYzJjOTQ3NDY1Nn08L2ZvbGRl
+clR5cGU+CjwvdGVtcGxhdGVJbmZvPgo8c2VhcmNoQ29ubmVjdG9yRGVzY3JpcHRpb25MaXN0Pgo8
+c2VhcmNoQ29ubmVjdG9yRGVzY3JpcHRpb24+Cjxpc0RlZmF1bHRTYXZlTG9jYXRpb24+dHJ1ZTwv
+aXNEZWZhdWx0U2F2ZUxvY2F0aW9uPgo8aXNTdXBwb3J0ZWQ+ZmFsc2U8L2lzU3VwcG9ydGVkPgo8
+c2ltcGxlTG9jYXRpb24+Cjx1cmw+aHR0cDovLzE5Mi4xNjguNDUuMjQxPC91cmw+Cjwvc2ltcGxl
+TG9jYXRpb24+Cjwvc2VhcmNoQ29ubmVjdG9yRGVzY3JpcHRpb24+Cjwvc2VhcmNoQ29ubmVjdG9y
+RGVzY3JpcHRpb25MaXN0Pgo8L2xpYnJhcnlEZXNjcmlwdGlvbj4K
+
+--boundary-example--
+
+.
