@@ -679,6 +679,17 @@ J.) use exiftool to display details about the document.pdf
 -u --> unknown tags
 exiftool -a -u document.pdf
 
+K.) Check if NC is installed:
+in Linux:
+which nc
+-----
+Windows:
+Get-Command nc -ErrorAction SilentlyContinue
+where nc
+Run Netcat Windows:
+nc IPADDRESS PORT
+
+
 =====================================================================
 		6.) Priv Escalation
 =====================================================================
