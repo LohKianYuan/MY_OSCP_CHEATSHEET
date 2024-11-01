@@ -698,6 +698,15 @@ Get-Command nc -ErrorAction SilentlyContinue
 where nc
 Run Netcat Windows:
 nc IPADDRESS PORT
+-----
+In linux, run the following NC command 
+	i.) to check which SSH ports are open on a host:
+	for i in 22 2222 2223 2200 22222; do nc -zv -w 1 10.4.140.215 $i; done
+	ii.) to check range of ip_address in a subnet
+	for i in $(seq 1 254); do nc -zv -w 1 172.16.50.$i 445; done
+	iii.) to check which ports open assuming you cannot NETCAT in a host
+	for i in $(seq 1 1000); do nc -zv -w 1 172.16.50.1 $i; done
+
 
 
 =====================================================================
