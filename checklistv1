@@ -707,6 +707,14 @@ In linux, run the following NC command
 	iii.) to check which ports open assuming you cannot NETCAT in a host
 	for i in $(seq 1 1000); do nc -zv -w 1 172.16.50.1 $i; done
 
+L.) Find command: find flag.txt in all directory remove all errors 
+Linux:
+find / -name "flag.txt" 2>/dev/null
+Windows:
+dir C:\flag.txt /s /p 2>nul
+
+
+
 
 
 =====================================================================
