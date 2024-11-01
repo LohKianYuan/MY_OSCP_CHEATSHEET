@@ -26,6 +26,9 @@ b. Perform Network Mapping
 	v.) Scan for all Open Ports using MassScan
 		 sudo massscan -p1-65535,U:1-65535 $IP_Address --rate 2500000
 
+	vi.) Very quick nmap scan
+		nmap -vvv -sT -p9000-9100 -Pn -n 10.4.140.215
+
 	
 
 =====================================================================
