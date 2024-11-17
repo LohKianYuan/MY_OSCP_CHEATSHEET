@@ -1,4 +1,4 @@
-#1 Download PS_1a_base64_reverseshell.py & make sure you run it first as you need generate the powershell command in part 7
+#1 Download PS_1a_base64_reverseshell.py & make sure you run it first as you need generate the powershell command in part 7 --> also the client powershell must run this: "powershell -ep bypass" to enable script running
 #2 open a NC -nlvp 1708 on your KALI
 #3 assuming your target client is 192.168.203.74 (Client 74)
 #4 copy this script to the client machine later to run it to get a shell on another domain client machine. eg 192.168.203.72 (Client 72)
