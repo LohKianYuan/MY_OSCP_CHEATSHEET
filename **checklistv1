@@ -87,7 +87,8 @@ e. Search for Exploits
 a. Network Exploitation
 	i.) Domain Enumeration
 		a.) Powershell - 
-		
+		Import-Module ActiveDirectory
+			
 		Get the AD user called Dave : Get-ADUser -Identity "Dave"
 		Get the ADGroup details called ITAdmins : Get-ADGroup -Identity "ITAdmins"
 		Retrieves a list of all group objects in the Active Directory domain : Get-ADGroup -Filter *
