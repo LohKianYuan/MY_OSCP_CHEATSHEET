@@ -654,7 +654,19 @@ ssh -o PubkeyAcceptedKeyTypes=ssh-rsa -i hype_key_decrypted hype@$IP
 ii.) RSA Key - always set permission in order to use it.
 chmod 400 RSA_KEY_NAME
 
-h.) 
+RSA Types: 
+ecdsa type ssh --> id_ecdsa
+rsa type ssh   --> id_rsa
+to find them in LINUX
+find . -type f -name "id_ecdsa"
+find . -type f -name "id_rsa"
+
+Leverage RSA keys:
+1. chmod 600 id_rsa
+2. ssh -i id_rsa daniel@IPADDRESS
+3. May need SSH passphrase, to get it, will need to bruteforce it
+	ssh2john id_rsa > ssh.hash
+	john --wordlist=/usr/share/wordlists/rockyou.txt ssh.hash
 
 
 ii) Wordpress hashes: $P$BINTaLa8QLMqeXbQtzT2Qfizm2P/nI0
@@ -708,19 +720,7 @@ ii.) find like flag.txt, output the data and grep like OS{
 	Windows:
 	for /r %i in (*flag*) do @type "%i" | findstr "OS{"
 
-M.) RSA Types: 
-ecdsa type ssh --> id_ecdsa
-rsa type ssh   --> id_rsa
-to find them in LINUX
-find . -type f -name "id_ecdsa"
-find . -type f -name "id_rsa"
 
-Leverage RSA keys:
-1. chmod 600 id_rsa
-2. ssh -i id_rsa daniel@IPADDRESS
-3. May need SSH passphrase, to get it, will need to bruteforce it
-	ssh2john id_rsa > ssh.hash
-	john --wordlist=/usr/share/wordlists/rockyou.txt ssh.hash
 
 
 
@@ -740,6 +740,9 @@ List running process of a user
 ps -u *username*
 List file path of a certain process
 ps -fp $PID_Number
+
+Make a .sh script executable
+chmod a+x 
 
 =====================================================================
 		7.) HYDRA
