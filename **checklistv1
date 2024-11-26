@@ -708,6 +708,12 @@ ii.) find like flag.txt, output the data and grep like OS{
 	Windows:
 	for /r %i in (*flag*) do @type "%i" | findstr "OS{"
 
+iii.) RSA Types: 
+ecdsa type ssh --> id_ecdsa
+rsa type ssh   --> id_rsa
+to find them:
+find . -type f -name "id_ecdsa"
+find . -type f -name "id_rsa"
 
 
 
