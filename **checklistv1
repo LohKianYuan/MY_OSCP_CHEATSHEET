@@ -708,12 +708,19 @@ ii.) find like flag.txt, output the data and grep like OS{
 	Windows:
 	for /r %i in (*flag*) do @type "%i" | findstr "OS{"
 
-iii.) RSA Types: 
+M.) RSA Types: 
 ecdsa type ssh --> id_ecdsa
 rsa type ssh   --> id_rsa
-to find them:
+to find them in LINUX
 find . -type f -name "id_ecdsa"
 find . -type f -name "id_rsa"
+
+Leverage RSA keys:
+1. chmod 600 id_rsa
+2. ssh -i id_rsa daniel@IPADDRESS
+3. May need SSH passphrase, to get it, will need to bruteforce it
+	ssh2john id_rsa > ssh.hash
+	john --wordlist=/usr/share/wordlists/rockyou.txt ssh.hash
 
 
 
