@@ -195,6 +195,7 @@ a. Network Exploitation
 
 		Enumerating Users
 		crackmapexec smb 192.168.1.0/24 -u 'username' -p 'password' --users
+		crackmapexec smb 192.168.1.2 -u usernames.txt -p password.txt --continue-on-success
 		
 		e.) enum4linux
 		Attempt to get userlist / OS information from target
