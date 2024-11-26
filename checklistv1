@@ -46,13 +46,20 @@ b. Find more information about the WebServices / Servers
 	i.) Check if Wordpress/files/resources are present using the tools: feroxbuster / nikto
 		1.) Feroxbuster
 			feroxbuster --url http://$IP_Address
-			
+
+		    Feroxbuster type of files and using specific wordlists:
+			feroxbuster -u <target_url> -w <wordlist_path> -x <file_extension(s)>
+
 		2.) nikto
 			nikto -host=http://$IP_Address
 
-		3.) gobuster -use standard wordlists.
+		3.) gobuster -use standard wordlists They should reveal if Wordpress services or any files are present
 			gobuster dir -u URL -w -
-		They should reveal if Wordpress services or any files are present
+
+		    gobuster - for type of files like txt,pdf,config
+			gobuster dir -url -w /usr/share/wordlists/dirb/common.txt -o notepad.txt -x txt,pdf,config
+
+		
 		
 	ii.) Run Dirb on them to find directories on webservers
 			dirb http://$IP_Address
