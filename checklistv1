@@ -59,7 +59,8 @@ b. Find more information about the WebServices / Servers
 		    gobuster - for type of files like txt,pdf,config
 			gobuster dir -url -w /usr/share/wordlists/dirb/common.txt -o notepad.txt -x txt,pdf,config
 
-		
+		4.) when encounter CMS, use whatweb to scan the URL if it is wordpress or what other vulnerability
+		whatweb url
 		
 	ii.) Run Dirb on them to find directories on webservers
 			dirb http://$IP_Address
@@ -675,8 +676,7 @@ ii.) RSA Key - always set permission in order to use it.
 chmod 400 RSA_KEY_NAME
 
 h.) 
-i.) when encounter CMS, use whatweb to scan the URL if it is wordpress or what other vulnerability
-whatweb url
+
 
 ii) Wordpress hashes: $P$BINTaLa8QLMqeXbQtzT2Qfizm2P/nI0
 https://hashcat.net/wiki/doku.php?id=example_hashes
