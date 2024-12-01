@@ -50,6 +50,8 @@ b. Find more information about the WebServices / Servers
 		    Feroxbuster type of files and using specific wordlists:
 			feroxbuster -u <target_url> -w <wordlist_path> -x <file_extension(s)>
 
+			/usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-lowercase-2.3-medium.txt
+
 		2.) nikto
 			nikto -host=http://$IP_Address
 
