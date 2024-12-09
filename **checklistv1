@@ -729,6 +729,9 @@ ii.) find like flag.txt, output the data and grep like OS{
 	Windows:
 	for /r %i in (*flag*) do @type "%i" | findstr "OS{"
 
+K.) Using NET USE access SHARES
+smbclient //server/share -U <username>
+eg: smbclient //172.16.122.12/IPC$ -U medtech/yoshi
 
 
 
