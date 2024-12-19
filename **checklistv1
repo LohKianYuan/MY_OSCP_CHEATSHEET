@@ -29,6 +29,9 @@ b. Perform Network Mapping
 	vi.) Very quick nmap scan
 		nmap -vvv -sT -p9000-9100 -Pn -n 10.4.140.215
 
+	vii.) nmap all ports
+	nmap -sV -Pn -p- -T4 -vv 192.168.181.247
+
 	
 
 =====================================================================
