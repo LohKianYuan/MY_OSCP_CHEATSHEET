@@ -659,10 +659,16 @@ Check list of administrators of local users:
 net localgroup administrators
 add yourself to a group:
 Add-LocalGroupMember -Group "Administrators" -Member "YourUsername"
+
 Show Hidden file path:
 Get-ChildItem -Path "C:\Your\Directory\Path" -Force
 Check current group:
 whoami /groups
+
+CMD Commands:
+net localgroup "Remote Management Users" username /add
+net localgroup "Administrator" username /add
+
 
 If you have a normal cmd shell on a service user, you can try run below to get a powershell: powershell.exe -a '-NoProfile -Command ls'
 example belows:
