@@ -3,8 +3,8 @@ telnet 192.168.223.199 25
 EHLO 192.168.223.199
 AUTH LOGIN
 
-dGVzdEBzdXBlcm1hZ2ljb3JnLmNvbQ==
-dGVzdA==
+dGVzdEBzdXBlcm1hZ2ljb3JnLmNvbQ==  (username - encode with base 64)
+dGVzdA== (password - encode with base 64)
 
 MAIL FROM: test@supermagicorg.com
 
