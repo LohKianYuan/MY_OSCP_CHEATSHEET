@@ -155,6 +155,11 @@ run the following command to see what commanmds you can run as sudo
 
 sudo -l
 
+run as another user:
+su chloe
+**Enter password:
+Ee24zIK4cDhJHL4H
+
 12.Other Methods:
 
 
