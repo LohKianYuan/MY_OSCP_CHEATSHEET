@@ -754,6 +754,11 @@ ii.) find like flag.txt, output the data and grep like OS{
 	Windows:
 	for /r %i in (*flag*) do @type "%i" | findstr "OS{"
 
+iii.) find all files and grep like password:
+find /path/to/start -type f | xargs grep -i "password"
+eg:
+find /home/kali/oscp/labs/27.challengelabs/144/priv/joomla -type f | xargs grep -i "password"
+
 K.) Using NET USE access SHARES
 smbclient //server/share -U <username>
 eg: smbclient //172.16.122.12/IPC$ -U medtech/yoshi
