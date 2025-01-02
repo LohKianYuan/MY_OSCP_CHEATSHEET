@@ -661,7 +661,9 @@ add yourself to a group:
 Add-LocalGroupMember -Group "Administrators" -Member "YourUsername"
 
 Show Hidden file path:
-Get-ChildItem -Path "C:\Your\Directory\Path" -Force
+PS: Get-ChildItem -Path "C:\Your\Directory\Path" -Force
+Get-ChildItem -Force
+CMD: dir /A
 Check current group:
 whoami /groups
 
@@ -767,8 +769,16 @@ J.) powershell find only strings:
 Get-Content test.sdb | Select-String -Pattern "[a-zA-Z]+" | ForEach-Object { $_.Matches.Value }
 Get-Content test.jfm | Select-String -Pattern "[a-zA-Z]+" | ForEach-Object { $_.Matches.Value }
 
+====================================================================
+Copy files from XFREERDP to KALI
 
+1. on Kali, start smbserver:
+impacket-smbserver SHARE /home/kali/oscp/labs/27.challengelabs/SECURA/189
 
+2. run terminal to xfreerdp:
+xfreerdp /u:offsec /v:192.168.163.250 /drive:SHARED,/home/kali/oscp/labs/27.challengelabs/SECURA/189
+
+3. go to THIS PC and then look for your shared folder.
 
 
 
