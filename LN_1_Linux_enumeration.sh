@@ -128,5 +128,8 @@ echo "------ Manually Run the following commands ------"
 echo '  openssl passwd Welcome2025!  '
 echo '  root2:$sslpassword:0:0:root:/root:/bin/bash >> /etc/passwd  '
 echo '  su root2  '
-
-
+echo " "
+echo " "
+echo "========== Eigth Section - See if you can run the following sudo permission =========="
+echo "run sudo -l manually"
+echo "run sudo -i manually"
