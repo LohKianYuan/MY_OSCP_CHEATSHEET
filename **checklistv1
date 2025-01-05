@@ -764,10 +764,24 @@ ii.) find like flag.txt, output the data and grep like OS{
      	Linux:
 	find . -type d -name "*www*" 2>/dev/null
 
+
 iii.) find all files and grep like password:
 find /path/to/start -type f | xargs grep -i "password"
 eg:
 find /home/kali/oscp/labs/27.challengelabs/144/priv/joomla -type f | xargs grep -i "password"
+
+iv.) Locate which directory is writeable:
+Linux:
+find . -type d -perm -u=w -exec test -w {} \; -print
+find . -type d -writable -exec test -w {} \; -print
+
+Windows:
+CMD:
+for /d /r "." %d in (*) do @icacls "%d" | find "M" >nul && echo Writable: %d
+Powershell:
+Get-ChildItem -Path "." -Recurse -Directory | Where-Object { Test-Path $_.FullName -PathType Container -and (Get-Acl $_.FullName).AccessToString -match "Allow.*Write" } | ForEach-Object { $_.FullName }
+Get-ChildItem -Path $PWD -Recurse -Directory | Where-Object { Test-Path $_.FullName -PathType Container -and (Get-Acl $_.FullName).AccessToString -match "Allow.*Write" } | ForEach-Object { $_.FullName }
+
 
 K.) Using NET USE access SHARES
 smbclient //server/share -U <username>
