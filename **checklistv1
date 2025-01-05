@@ -775,6 +775,15 @@ Linux:
 find . -type d -perm -u=w -exec test -w {} \; -print
 find . -type d -writable -exec test -w {} \; -print
 
+V.) Linux, append text to a file:
+3s/$/ Your appended text here/: Appends text at the end of line 3.
+sudo sed -i '3s/$/ Your appended text here/' /etc/group
+
+Replace the third line with new content:
+sudo sed -i '3s/.*/Your new content here/' /etc/group
+
+
+
 Windows:
 CMD:
 for /d /r "." %d in (*) do @icacls "%d" | find "M" >nul && echo Writable: %d
