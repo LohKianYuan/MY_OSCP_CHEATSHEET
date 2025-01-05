@@ -195,6 +195,7 @@ a. Network Exploitation
 		2.) smbmap -H 10.129.228.253
 		3.) smbclient -L 10.129.228.253 (USE THIS -- this is better)
 		smbclient -L 10.129.228.253 -U username%password
+		smbclient -L 172.16.105.21 -U relia/michelle%NotMyPassword0k\?
 		4.) smbclient \\\\IPADDRESS\\Foldername
 		5.) with credentials:
 		smbclient //IPADDRESS/Uploads -U administrator
