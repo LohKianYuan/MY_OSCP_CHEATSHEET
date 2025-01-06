@@ -765,6 +765,9 @@ ii.) find like flag.txt, output the data and grep like OS{
 	Windows:
 	for /r %i in (*flag*) do @type "%i" | findstr "OS{"
 
+       Windows: find all directories of file local.txt
+       Get-ChildItem -Path "C:\Users" -Filter "local.txt" -Recurse -Force 2>$null
+
      find a directory including subdirectories like www
      	Linux:
 	find . -type d -name "*www*" 2>/dev/null
@@ -774,6 +777,8 @@ iii.) find all files and grep like password:
 find /path/to/start -type f | xargs grep -i "password"
 eg:
 find /home/kali/oscp/labs/27.challengelabs/144/priv/joomla -type f | xargs grep -i "password"
+
+
 
 iv.) Locate which directory is writeable:
 Linux:
