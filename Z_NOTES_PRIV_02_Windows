@@ -238,6 +238,9 @@ https://www.youtube.com/watch?v=uTcrbNBcoxQ
 		1. Install chisel in kali
 		https://github.com/jpillora/chisel
 		curl https://i.jpillora.com/chisel! | bash
+
+		check your chisel version after that
+		chisel version
 		
 		2. copy chisel to the tmp directory at the pivot machine
 		scp chisel user@10.1.1.10:/tmp
