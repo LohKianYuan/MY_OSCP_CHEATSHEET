@@ -76,7 +76,7 @@ b. Find more information about the WebServices / Servers
 c. Scan for Vulnerabitlies in each host using NMAP
 		i.) sudo nmap --script=vuln -sV -Pn $IP_Address
 			
-d. Investigate SSL/TLS configurations
+d. Investigate SSL/TLS configurations (check for DNS ETC)
 		i.) sslscan $IP_Address:Port_Number
 	
 e. Search for Exploits
