@@ -253,6 +253,23 @@ a. Network Exploitation
 		run commands to do the following:
 		1. disable firewall: set command 'powershell set-netfirewallprofile -name public -enabled false'
 		   check firewall: Get-NetFirewallProfile
+
+		1b. Open Firewall Port (Powershell)
+		To open a firewall port, such as port 1235, using PowerShell, you can use the New-NetFirewallRule cmdlet. Here's the command:
+		New-NetFirewallRule -DisplayName "Open Port 1235" -Direction Inbound -LocalPort 1235 -Protocol TCP -Action Allow
+
+		1c. To confirm the rule was created:
+		Get-NetFirewallRule -DisplayName "Open Port 1235"
+
+		1d. Show ALL Firewall rules (Can be very slow)
+		Get-NetFirewallRule -Action Allow -Direction Inbound | Get-NetFirewallPortFilter | Select-Object LocalPort, Protocol | Sort-Object LocalPort -Unique
+
+		1e. All Firewall Rules with Ports
+		Get-NetFirewallRule | Get-NetFirewallPortFilter | Select-Object Name, LocalPort, Protocol
+
+		1f. If you want to check whether a specific port (e.g., port 8000) is open:
+		Get-NetFirewallRule -Action Allow -Direction Inbound | Get-NetFirewallPortFilter | Where-Object LocalPort -eq 8000
+
 		2. disable antivirus: set command 'powershell set-MPPreference -DisableRealtimeMonitoring $true'
 		   check antivirus: Get-MpComputerStatus
 		3a. create user: set command 'net user david2 1234567aA /add /domain'
