@@ -811,8 +811,11 @@ ii.) find like flag.txt, output the data and grep like OS{
 	Windows:
 	for /r %i in (*flag*) do @type "%i" | findstr "OS{"
 
-       Windows: find all directories of file local.txt
+       Windows: find all directories of file local.txt | SAM | SYSTEM
        Get-ChildItem -Path "C:\Users" -Filter "local.txt" -Recurse -Force 2>$null
+	Get-ChildItem -Path "C:\windows.old" -Filter "*SAM*" -Recurse -Force 2>$null
+	Get-ChildItem -Path "C:\windows.old" -Filter "*SYSTEM" -Recurse -Force 2>$null
+
 
      find a directory including subdirectories like www
      	Linux:
