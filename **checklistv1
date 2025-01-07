@@ -103,6 +103,15 @@ a. Network Exploitation
 
 		Check Domain Groups: net group
 		Add user to AD group: Add-ADGroupMember -Identity "Domain Admins" -Members "John"
+
+		Check for Disabled Accounts:
+		Search-ADAccount -AccountDisabled | Select-Object Name, SamAccountName
+
+		Enable an account:
+		Enable-ADAccount -Identity "celia.almeda"
+
+		Unlock an account:
+		Unlock-ADAccount -Identity "celia.almeda"
 		
 		Retrieves the status of the Windows Update service : Get-Service -Name "wuauserv"
 		Lists all running services on the computer : Get-Service | Where-Object { $_.Status -eq "Running" }
