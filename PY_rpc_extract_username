@@ -1,0 +1,42 @@
+import re
+
+# Input text
+data = """user:[Administrator] rid:[0x1f4]
+user:[Guest] rid:[0x1f5]
+user:[krbtgt] rid:[0x1f6]
+user:[celia.almeda] rid:[0x451]
+user:[tom.kinney] rid:[0x452]
+user:[tom_admin] rid:[0x454]
+user:[Leonard.Morris] rid:[0x642]
+user:[Sandra.Craig] rid:[0x643]
+user:[Chelsea.Byrne] rid:[0x644]
+user:[Luke.Martin] rid:[0x645]
+user:[Donna.Johnson] rid:[0x646]
+user:[Lawrence.Kay] rid:[0x648]
+user:[Emily.Bishop] rid:[0x649]
+user:[Linda.Patel] rid:[0x64a]
+user:[Jamie.Thomas] rid:[0x64b]
+user:[Shane.Mitchell] rid:[0x64c]
+user:[Frank.Farrell] rid:[0x64e]
+user:[Jane.Booth] rid:[0x64f]
+user:[Joan.North] rid:[0x650]
+user:[Carol.Webb] rid:[0x652]
+user:[Kenneth.Coles] rid:[0x653]
+user:[Oliver.Gray] rid:[0x654]
+user:[Georgina.Begum] rid:[0x656]
+user:[Aimee.Hunt] rid:[0x657]
+user:[Thomas.Robinson] rid:[0x658]
+user:[Janice.Turner] rid:[0x659]
+user:[sql_svc] rid:[0xa29]
+user:[john.dorian] rid:[0xa2a]
+user:[web_svc] rid:[0xa2e]"""
+
+# Regular expression to extract the usernames
+pattern = r"user:\[(.*?)\]"
+
+# Find all matches
+usernames = re.findall(pattern, data)
+
+# Print the extracted usernames
+for username in usernames:
+    print(username)
