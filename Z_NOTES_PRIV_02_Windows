@@ -340,6 +340,8 @@ https://www.youtube.com/watch?v=uTcrbNBcoxQ
 	
 		11. In Kali, in the same listerner session, run the following:
 		listener_add --addr 0.0.0.0:1234 --to 127.0.0.1:4444  (any connection to the pivot, port 1234 will be forwarded to kali port 4444)
+		listener_add --addr 0.0.0.0:1234 --to 0.0.0.0:4444 (can be this also).
+		Use netstat -tuln | grep 4444 to check if it is running on 0.0.0.0 or 127.0.0.1
 		
 		listener_list (to see the listerners)
 		
