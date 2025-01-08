@@ -55,6 +55,9 @@ b. Find more information about the WebServices / Servers
 
 			/usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-lowercase-2.3-medium.txt
 
+			feroxbuster -u http://192.168.185.149 -x php,txt,html
+			feroxbuster -u http://192.168.185.149 -w /usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-lowercase-2.3-medium.txt
+
 		2.) nikto
 			nikto -host=http://$IP_Address
 
@@ -72,6 +75,9 @@ b. Find more information about the WebServices / Servers
 			
 	iii.) Autorecon - if you have time, you can run autorecon for more enumeration
 			autorecon $IP_Address
+
+	iv.) dirsearch -u http://192.168.185.149 -e php,html,txt
+	search for pages like php, html, txt
 			
 c. Scan for Vulnerabitlies in each host using NMAP
 		i.) sudo nmap --script=vuln -sV -Pn $IP_Address
