@@ -32,6 +32,9 @@ b. Perform Network Mapping
 	vii.) nmap all ports
 	nmap -sV -Pn -p- -T4 -vv 192.168.181.247
 
+	viii.) Scan UDP very fast:
+	sudo nmap -sU --open  -v -T4 -A 192.168.185.149
+
 	
 
 =====================================================================
