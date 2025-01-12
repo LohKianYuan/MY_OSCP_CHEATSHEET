@@ -72,6 +72,10 @@ b. Find more information about the WebServices / Servers
 
 		4.) when encounter CMS, use whatweb to scan the URL if it is wordpress or what other vulnerability
 		whatweb url
+
+		5.) Fuzzing:
+		ffuf -w /usr/share/seclists/Discovery/Web-Content/raft-medium-words.txt -u http://$IPADDRESS/FUZZ
+		ffuf -w /usr/share/seclists/Discovery/Web-Content/raft-medium-words.txt -u http://192.168.129.150:8080/FUZZ
 		
 	ii.) Run Dirb on them to find directories on webservers
 			dirb http://$IP_Address
