@@ -35,6 +35,9 @@ b. Perform Network Mapping
 	viii.) Scan UDP very fast:
 	sudo nmap -sU --open  -v -T4 -A 192.168.185.149
 
+c.) if find files, use exiftool
+exiftool *.pdf
+
 	
 
 =====================================================================
