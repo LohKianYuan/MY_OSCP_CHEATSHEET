@@ -941,6 +941,16 @@ If still cannot, try
 Get-Service
 Stop-Service -Name "GPGOrchestrator" -Force
 
+4. Run command in powershell as another user:
+# Provide username and password (stored as secure string)
+$username = "administrator"
+$password = ConvertTo-SecureString "Password123!" -AsPlainText -Force
+
+# Create a credential object
+$credential = New-Object System.Management.Automation.PSCredential($username, $password)
+
+# Run a command as the specified user
+Start-Process shell_1710.exe -Credential $credential -ArgumentList "-NoExit", "-Command", "Get-Process"
 
 
 
