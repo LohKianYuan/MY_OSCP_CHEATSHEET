@@ -934,6 +934,13 @@ Get-Process
 Stop a Process:
 Stop-Process -Name "notepad" -Force
 
+If you cannot stop, you can try task kill PID:
+taskkill /F /PID 2604
+
+If still cannot, try
+Get-Service
+Stop-Service -Name "GPGOrchestrator" -Force
+
 
 
 
