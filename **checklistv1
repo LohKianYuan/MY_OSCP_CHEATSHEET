@@ -925,6 +925,18 @@ ps -fp $PID_Number
 Make a .sh script executable
 chmod a+x 
 
+3. List all autostartup services -powershell:
+Get-Service | Select-Object DisplayName, Status, StartType
+
+List all running Process:
+Get-Process
+
+Stop a Process:
+Stop-Process -Name "notepad" -Force
+
+
+
+
 =====================================================================
 		7.) HYDRA
 =====================================================================
