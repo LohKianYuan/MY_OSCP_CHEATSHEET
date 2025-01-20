@@ -747,6 +747,8 @@ Add-LocalGroupMember -Group "Administrators" -Member "YourUsername"
 Show Hidden file path:
 PS: Get-ChildItem -Path "C:\Your\Directory\Path" -Force
 Get-ChildItem -Force
+Get-ChildItem -Path "C:\Your\Directory\Path" -Recurse -Force
+
 CMD: dir /A
 Check current group:
 whoami /groups
@@ -852,10 +854,13 @@ ii.) find like flag.txt, output the data and grep like OS{
 
 
 iii.) find all files and grep like password:
+Linux:
 find /path/to/start -type f | xargs grep -i "password"
 eg:
 find /home/kali/oscp/labs/27.challengelabs/144/priv/joomla -type f | xargs grep -i "password"
-
+Windows:
+cat * | Select-String -Pattern "pass"
+cat -Path "C:\Your\Directory\Path\*" -Recurse | Select-String -Pattern "password" -CaseSensitive
 
 
 iv.) Locate which directory is writeable:
