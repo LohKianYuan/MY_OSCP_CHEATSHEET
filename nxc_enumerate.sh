@@ -7,10 +7,10 @@
 #bash nxc_enumerate.sh 172.16.111.6 administrator P vau\!XCKjNQBv2\$
 
 #if you want to output to a file, run like below:
-#bash nxc_enumerate.sh 172.16.111.6 maildmz P DPuBT9tGCBrTbR | tee outputfile.txt
+#bash -x nxc_enumerate.sh 172.16.111.6 maildmz P DPuBT9tGCBrTbR | tee outputfile.txt
 #bash -x nxc_enumerate.sh 172.16.111.6 administrator P vau\!XCKjNQBv2\$ | tee outputfile.txt
 
-#if you want to disable event expansion before running the script:
+#if you want to disable event expansion meaning you duwan to append \ before the special characters when running the script, run like below:
 #set +o histexpand
 #bash nxc_enumerate.sh 172.16.111.6 administrator P vau!XCKjNQBv2$
 #bash -x nxc_enumerate.sh 172.16.111.6 administrator P vau!XCKjNQBv2$ | tee outputfile.txt
