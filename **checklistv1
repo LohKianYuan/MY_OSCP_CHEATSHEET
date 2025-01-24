@@ -952,6 +952,10 @@ $credential = New-Object System.Management.Automation.PSCredential($username, $p
 # Run a command as the specified user
 Start-Process shell_1710.exe -Credential $credential -ArgumentList "-NoExit", "-Command", "Get-Process"
 
+5. Get full domain Name from powershell:
+Use either one below:
+(Get-WmiObject Win32_ComputerSystem).Domain
+[System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain().Name
 
 
 =====================================================================
