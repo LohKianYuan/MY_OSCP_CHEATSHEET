@@ -648,6 +648,13 @@ a. Network Exploitation
 		-- curl headers:
 		curl -I http://IP_ADDRESS
 
+		-- curl - check if you can put / etc
+		curl -X OPTIONS http://IP_ADDRESS
+
+		
+		--curl Test a PUT request (if allowed):
+		curl -PUT -d "data=example" WEBSITE
+
 		f.) Upload a PHP reverse shell to a website, access it to establish a session
 		
 			1. Download PHP payload from: Pentestmonkey
