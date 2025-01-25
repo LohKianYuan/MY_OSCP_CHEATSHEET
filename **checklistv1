@@ -951,6 +951,12 @@ If still cannot, try
 Get-Service
 Stop-Service -Name "GPGOrchestrator" -Force
 
+Get Service Full Name:
+Get-Service -Name "RmSvc"
+
+Get Service Full Path:
+Get-WmiObject Win32_Service | Where-Object { $_.Name -eq "RmSvc" } | Select-Object PathName
+
 4. Run command in powershell as another user:
 # Provide username and password (stored as secure string)
 $username = "administrator"
