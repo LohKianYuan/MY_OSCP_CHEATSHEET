@@ -651,6 +651,8 @@ a. Network Exploitation
 		-- curl - check if you can put / etc
 		curl -X OPTIONS http://IP_ADDRESS
 
+		curl -X OPTIONS -I http://IP_ADDRESS
+
 		
 		--curl Test a PUT request (if allowed):
 		curl -PUT -d "data=example" WEBSITE
