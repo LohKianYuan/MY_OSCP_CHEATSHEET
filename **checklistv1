@@ -887,6 +887,8 @@ sudo sed -i '3s/$/ Your appended text here/' /etc/group
 Replace the third line with new content:
 sudo sed -i '3s/.*/Your new content here/' /etc/group
 
+add yourself to sudoers:
+echo 'james ALL=(root) NOPASSWD: ALL' > /etc/sudoers
 
 
 Windows:
