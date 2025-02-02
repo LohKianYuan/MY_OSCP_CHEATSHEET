@@ -33,12 +33,20 @@ base_url="${url%%=*}="
 # Loop through payloads and make requests
 while IFS= read -r payload; do
     full_url="${base_url}${payload}"
+    echo " " >> output.txt
     echo "Executing: curl -s \"$full_url\""
     echo "Payload: $payload"
+    echo "Executing: curl -s \"$full_url\"" >> output.txt
+    echo "Payload: $payload" >> output.txt
+    echo " " >> output.txt
     if [[ -n "$grep_exclude" ]]; then
-        curl -s "$full_url" | grep -v "$grep_exclude"
+        curl -s "$full_url" | grep -v "$grep_exclude" >> output.txt
     else
-        curl -s "$full_url"
+        curl -s "$full_url" >> output.txt
     fi
-    echo -e "\n====================="
+
+    echo -e "\n===============================================================" >> output.txt
 done < "$payload_list"
+echo " " >> output.txt
+echo " " >> output.txt
+echo "All payloads processed. Output saved to output.txt"
