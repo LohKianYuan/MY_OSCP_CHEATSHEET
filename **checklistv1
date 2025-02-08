@@ -38,7 +38,8 @@ b. Perform Network Mapping
 c.) if find files, use exiftool
 exiftool *.pdf
 
-	
+d.) curl http://192.168.185.99?whoami	
+
 
 =====================================================================
 		2. Vulnerability Analysis:
