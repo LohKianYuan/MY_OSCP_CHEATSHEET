@@ -660,6 +660,16 @@ a. Network Exploitation
 
 		curl -X OPTIONS -I http://IP_ADDRESS
 
+		curl -X OPTIONS -I http://192.168.185.169/uploads/
+			HTTP/1.1 200 OK
+			Date: Sat, 08 Feb 2025 06:42:36 GMT
+			Server: Apache/2.4.48 (Win64) OpenSSL/1.1.1k PHP/8.0.7
+			Allow: POST,OPTIONS,HEAD,GET,TRACE
+			Content-Length: 0
+			Content-Type: httpd/unix-directory
+
+
+
 		
 		--curl Test a PUT request (if allowed):
 		curl -PUT -d "data=example" WEBSITE
