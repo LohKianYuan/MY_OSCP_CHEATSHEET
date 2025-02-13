@@ -73,6 +73,7 @@ b. Find more information about the WebServices / Servers
 
 		    gobuster - for type of files like txt,pdf,config
 			gobuster dir -url -w /usr/share/wordlists/dirb/common.txt -o notepad.txt -x txt,pdf,config
+			gobuster dir -u http://onlyrands.com/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x .html, .php
 
 		4.) when encounter CMS, use whatweb to scan the URL if it is wordpress or what other vulnerability
 		whatweb url
