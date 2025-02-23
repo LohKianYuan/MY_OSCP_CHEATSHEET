@@ -951,6 +951,12 @@ xfreerdp /u:offsec /v:192.168.163.250 /drive:SHARED,/home/kali/oscp/labs/27.chal
 
 3. go to THIS PC and then look for your shared folder.
 
+====================================================================
+Linux download
+WGET
+wget -O /tmp/filename.ext https://example.com/file.ext
+Curl
+curl -o /tmp/filename.ext https://example.com/file.ext
 
 
 =====================================================================
