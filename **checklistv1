@@ -101,7 +101,10 @@ e. Search for Exploits
 		i.) Using Msfconsole
 		ii.) searchsploit
 			searchsploit ms17-010
-			
+
+f. Microsoft IIS webpage:
+cadaver http://192.168.142.122
+
 =====================================================================
 		3.) Network Exploitations
 =====================================================================
